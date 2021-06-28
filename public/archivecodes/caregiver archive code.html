@@ -1,0 +1,493 @@
+
+<!-- archive code 1 -->
+
+<div class="panel-group" id="accordion">
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Monday.[0].Day}}">
+											<p>Monday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Monday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Monday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Tuesday.[0].Day}}">
+											<p>Tuesday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Tuesday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Tuesday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Wednesday.[0].Day}}">
+											<p>Wednesday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Wednesday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Wednesday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Thursday.[0].Day}}">
+											<p>Thursday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Thursday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Thursday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Friday.[0].Day}}">
+											<p>Friday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Friday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Friday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Saturday.[0].Day}}">
+											<p>Saturday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Saturday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Saturday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+
+
+							<div class="panel panel-default">
+								<div class="panel-heading">
+									<h4 class="panel-title">
+										<a data-toggle="collapse" data-parent="#accordion" href="#{{Sunday.[0].Day}}">
+											<p>Sunday</p>
+										</a>
+									</h4>
+								</div>
+								<div id="{{Sunday.[0].Day}}" class="panel-collapse collapse">
+									<div class="panel-body">
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-md-12">
+													<table class="table-striped table table-responsive">
+														<thead>
+															<tr>
+																<th>Name</th>
+																<th>Address</th>
+																<th>tel</th>
+																<th>Gender</th>
+																<th>Time In</th>
+																<th>Time Out</th>	
+															</tr>
+														</thead>
+														<tbody>
+														{{#each Sunday}}
+															<tr>
+																<td>{{Patient.[0].profile.Name}}</td>
+																<td>{{Patient.[0].profile.address}}</td>
+																<td>{{Patient.[0].profile.tel}}</td>
+																<td>{{Patient.[0].profile.gender}}</td>
+																<td>{{Time_in}}</td>
+																<td>{{Time_out}}</td>
+																<td><button class="btn btn-primary moreDetailss moreDetails{{sched_id}}">More Details</button></td>
+															</tr>
+															<tr class="{{sched_id}}" style="display: none">
+																<td colspan="7">
+																	<div class="container-fluid">
+																		<div class="row">
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<!-- <img src="/cdn/storage/Images/{{Patient.[0].profile.IdPicture._id}}/original/{{Patient.[0].profile.IdPicture._id}}{{Patient.[0].profile.IdPicture.extensionWithDot}}" alt="{{name}}" class=" img-rounded img-responsive" width="50%" style="border-radius: 500px;"/> -->
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Biography : {{Patient.[0].profile.Name}}</p></div>
+																				<div class="row"><p>age : </p></div>
+																				<div class="row"><p>birthdate : </p></div>
+																				<div class="row"><p>address : {{Patient.[0].rofile.address}}</p></div>
+																				<div class="row"><p>email : {{Patient.[0].profile.email}}</p></div>
+																			</div>
+																			<div class="col-md-4 col-sm-4 col-xs-4">
+																				<div class="row"><p>Map :</p></div>
+																				<div class="row">
+																					<div id="mapmap2_{{sched_id}}" style="width: 100%; max-width: 100%; height: 100px;"></div>
+																				</div>
+																			</div>
+																		</div>
+																	</div>
+																</td>
+															</tr>
+														{{/each}}
+														</tbody>
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+					</div>
