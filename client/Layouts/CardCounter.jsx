@@ -20,14 +20,17 @@ var useStyles = makeStyles((theme)=>({
 		color:'white'
 	},
 	cardCounterMiddle:{
-		paddingBottom:15,
+		paddingBottom:5,
 		color:'white',
-		paddingTop:15
+		paddingTop:5
 	},
 	cardCounterBottom:{
 		paddingTop:5,	
 		color:'white',
 		paddingBottom:0,
+	},
+	CardWrapper:{
+		paddingBottom:15,
 	}
 }))
 // sample of this Card Counter
@@ -62,7 +65,7 @@ function Cards(props){
 	}
 	return(
 		<Card raised={raiser} onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} className={classes.cardCounter} >
-			<CardContent>
+			<CardContent className={classes.CardWrapper}>
 				<Grid className={classes.cardCounterNav} container justify="flex-end" direction="row" >
 					<Grid item >
 						<Grid container justify="space-between" alignItems="flex-start">
@@ -79,9 +82,9 @@ function Cards(props){
 					<Grid item ><GetIcon icon={o.icon} /></Grid>
 					<Grid item ><Typography>{o.counter}</Typography></Grid>
 				</Grid>
-				<Grid className={classes.cardCounterBottom} container spacing={0} justify="flex-start" direction="row">
+				{o.subtitle?<Grid className={classes.cardCounterBottom} container spacing={0} justify="flex-start" direction="row">
 					<Grid item ><Typography>{o.subtitle}</Typography></Grid>
-				</Grid>
+				</Grid>:''}				
 			</CardContent>
 		</Card>
 	)

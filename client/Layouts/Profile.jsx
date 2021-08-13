@@ -9,6 +9,7 @@ import { infoCards as CaregiverCards,
 } from '../Caregiver/Caregiver.jsx'
 import { infoCards as PatientCards, 
 				 PatientToCaregiver as PatientContent} from '../Patient/Patient.jsx'
+import moment from 'moment'
 import {
 	Scheduler,
 	DayView,
@@ -17,6 +18,7 @@ import {
 	AppointmentTooltip,
 	DragDropProvider
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { Timestamp } from 'bson'
 const ProfileColl = new Meteor.Collection('ProfileColl');
 const useStyles = makeStyles((theme) =>({
   small: {
@@ -28,7 +30,11 @@ const useStyles = makeStyles((theme) =>({
 		paddingBottom:theme.spacing(5),
 		paddingLeft:30
 	},
+	targetProfileHolder:{
+		paddingBottom:theme.spacing(1),
+	},
 	profileWrapper:{
+		paddingLeft:10,
 		paddingBottom:theme.spacing(3),
 	},
   large: {
@@ -105,22 +111,20 @@ function ProfileContent(props){
 	}
 	return(
 		<React.Fragment>
-			<Grid container>
-				<Grid item sm={12} md={10} lg={8}>
-					<Grid component={Paper} className={classes.profileWrapper}>
-						{_id?<NameHolder classes={classes} data={_id?currentLoggedinNameHolder:''}/>:false}
-						<Grid container>
-							<CardCounter cardItems={cardItem?cardItem:[]} md={4} sm={4} lg={4} xl={4}/>
-						</Grid>
-					</Grid>
-					<ProfileDivider />
-					<Grid component={Paper}>
-						{
-						Roles.userIsInRole(_id,'Caregiver')?<CaregiverContent id={_id} />:
-						Roles.userIsInRole(_id,'Patient')?<PatientContent id={_id} />:false/* next for Staffs */
-						}
+			<Grid component={Paper} container className={classes.profileWrapper}>
+				<Grid item sm={12} md={12} lg={12}>
+					{_id?<ProfileNameHolder classes={classes} data={_id?currentLoggedinNameHolder:''}/>:false}
+					<Grid container>
+						<CardCounter cardItems={cardItem?cardItem:[]} md={3} sm={5} lg={3} xl={3}/>
 					</Grid>
 				</Grid>
+			</Grid>
+			<ProfileDivider />
+			<Grid component={Paper} container >
+				{
+				Roles.userIsInRole(_id,'Caregiver')?<CaregiverContent id={_id} />:
+				Roles.userIsInRole(_id,'Patient')?<PatientContent id={_id} />:false/* next for Staffs */
+				}
 			</Grid>
 		</React.Fragment>
 	)
@@ -133,7 +137,41 @@ const CaregiverContent = () => {
 	)
 }
 
-export const NameHolder = (props) => {
+export const ProfileNameHolder = () =>{
+		let classes = useStyles()
+		const { data } = props
+	/*{
+		name:
+		subtitle:
+		CompanyName:
+		profilePicture:url
+		action:[{call}, {video call}, {message}],
+		date:
+	}*/
+		return (
+		<Grid container className={classes.profileHolder}>
+			{/* <Grid item md={2} sm={2} >
+				<Avatar className={classes.large} src={data.profilePicture}/>
+			</Grid> */}
+			<Grid item md={12} sm={12} lg={8} >
+				<Grid container direction="column" className={classes.nameHolder}>
+					<Grid item>
+						<Typography>{moment().format('LLLL')}</Typography>
+					</Grid>
+					<Grid item>
+						<Typography variant="h5">Hi, {data.name?data.name:'Name'}</Typography>
+					</Grid>
+					{/* <Grid item>
+						<Typography>{data.CompanyName?data.CompanyName:"Company Name"}</Typography>
+					</Grid> */}
+				</Grid>
+			</Grid>
+		</Grid>
+	)
+}
+
+
+export const TargetNameHolder = (props) => {
 	let classes = useStyles()
 	const { data } = props
 	/*{
@@ -145,22 +183,19 @@ export const NameHolder = (props) => {
 		date:
 	}*/
 	return (
-		<Grid container className={classes.profileHolder}>
-			<Grid item md={2} sm={2} >
+		<Grid container className={classes.targetProfileHolder}>
+			{/* <Grid item md={2} sm={2} >
 				<Avatar className={classes.large} src={data.profilePicture}/>
-			</Grid>
-			<Grid item md={7} sm={6} >
+			</Grid> */}
+			<Grid item md={12} lg={12} sm={12} >
 				<Grid container direction="column" className={classes.nameHolder}>
 					<Grid item>
-						<Typography>{data.name?data.name:'Name'}</Typography>
+						<Typography variant="body1">{data.name?data.name:'Name'}</Typography>
 					</Grid>
-					<Grid item>
+					{/* <Grid item>
 						<Typography>{data.CompanyName?data.CompanyName:"Company Name"}</Typography>
-					</Grid>
+					</Grid> */}
 				</Grid>
-			</Grid>
-			<Grid item>
-				<DateCard />
 			</Grid>
 		</Grid>
 	)

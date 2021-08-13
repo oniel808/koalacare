@@ -9,7 +9,7 @@ import moment from 'moment';
 import { Paper, Button, Divider, Radio, RadioGroup, InputLabel, FormLabel, 
 				FormControl, FormControlLabel, Input, TextField, Typography, Grid, Tab, Tabs,
 				Hidden} from '@material-ui/core'
-import { NameHolder, ProfileDivider, CustomSchedule} from '../Layouts/Profile.jsx'
+import { ProfileNameHolder, TargetNameHolder, ProfileDivider, CustomSchedule} from '../Layouts/Profile.jsx'
 
 const useStyles = makeStyles((theme)=>({
 	profilePicture:{
@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme)=>({
 		paddingTop:50,
 		paddingBottom:30
 	},
-	nameHolder:{
+	ProfileNameHolder:{
 		paddingTop:theme.spacing(3),
 	},
 }))
@@ -50,7 +50,7 @@ export function Caregiver(){
 	}]
 	profile = Meteor.user().profile
 	profilePicture = profile.IdPicture
-	const caregiverNameHolder = {
+	const caregiverProfileNameHolder = {
 		name:profile.Name,
 		subtitle:'',
 		CompanyName:profile.Job.companyName,
@@ -58,7 +58,7 @@ export function Caregiver(){
 		// action:[{call}, {video call}, {message}],
 		// date:
 	}
-	const PatientsNameHolder = {
+	const PatientsProfileNameHolder = {
 		name:'sample Name',
 		subtitle:'',
 		// profilePicture:url,
@@ -68,15 +68,21 @@ export function Caregiver(){
 	export const scheduleTabs = ["Current Patient", "Patient List"]
 	return (
 		<React.Fragment>
-			<Grid component={Paper}>
-				<NameHolder classes={classes} data={caregiverNameHolder}/>
-				<Grid container>
-					<CardCounter cardItems={infoCards} md={4} sm={4} lg={4} xl={4}/>
+			<Grid container>
+				<Grid item md={12} sm={12} lg ={8}>
+					<ProfileNameHolder classes={classes} data={caregiverProfileNameHolder}/>
+					<Grid container style={{marginLeft:20,marginBottom:10}}>
+						<CardCounter cardItems={infoCards} md={5} sm={5} lg={4} xl={3}/>
+					</Grid>
 				</Grid>
 			</Grid>
-			<ProfileDivider />
-			<Grid component={Paper}>
-				<NameHolder classes={classes} data={PatientsNameHolder}/>
+			<Grid container style={{padding:'10px 0px'}}>
+				<Grid item md={8} sm={12} lg ={7}>
+					<ProfileDivider />
+				</Grid>
+			</Grid>
+			<Grid item component={Paper} md={10} sm={12} lg ={8}>
+				<TargetNameHolder classes={classes} data={PatientsProfileNameHolder}/>
 				<CustomSchedule tabs={scheduleTabs}/>
 			</Grid>
 		</React.Fragment>

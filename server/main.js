@@ -94,6 +94,7 @@ if(Meteor.isServer){
 		// ServicePlans.remove({})
 		// Meteor.users.remove({_id:"RaPSfLScqZGa6Btv6"})
 		console.log(HealthCareAgency.find().fetch())
+		console.log(Meteor.users.find().fetch())
 		SuperAdminInit()
 	})
 	if (Meteor.isServer) {
@@ -106,7 +107,6 @@ if(Meteor.isServer){
 			Pass = x['password']
 			ifUserExist = (Meteor.users.findOne({username:User},{fields:{_id:1}}))?true:false
 			ifEmailExist = (Meteor.users.findOne({'emails.address':email},{fields:{_id:1}}))?true:false
-			console.log(x)
 			if(!ifUserExist && !ifEmailExist){
 				comp = undefined
 				ready = false
