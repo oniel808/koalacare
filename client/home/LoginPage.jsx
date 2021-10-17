@@ -4,14 +4,14 @@ import moment from 'moment'
 import GetIcon from '../Layouts/GetIcon.jsx'
 import { ReactiveVar } from 'meteor/reactive-var'
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import Typography from '@material-ui/core/Typography'
 import InputLabel from '@material-ui/core/InputLabel'
 import TextField from '@material-ui/core/TextField'
 import FormControl from '@material-ui/core/FormControl'
 import FormHelperText from '@material-ui/core/FormHelperText'
 import Grid from '@material-ui/core/Grid'
-import Link from '@material-ui/core/Link'
+import {Link as MaterialLink} from '@material-ui/core/'
 import Container from '@material-ui/core/Container'
 import Paper from '@material-ui/core/Paper'
 import Divider from '@material-ui/core/Divider'
@@ -19,7 +19,7 @@ import Button from '@material-ui/core/Button'
 import Hidden from '@material-ui/core/Hidden'
 import { shadows } from '@material-ui/system';
 import red from '@material-ui/core/colors/red';
-
+import { useHistory, BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom';
 imgnumber = Math.floor(Math.random() * 12)
 imgstr = `/assets/img/randomImages/${imgnumber}.jpg`
 const useStyles = makeStyles((theme)=>({
@@ -77,7 +77,7 @@ const useStyles = makeStyles((theme)=>({
 	}
 }))
 
-export function Login(){
+export default function Login(){
 	const classes = useStyles()
 	hrefs={
 		forgotPass:'/forgotPassword',
@@ -94,8 +94,11 @@ export function Login(){
 			function(err){
 			if(err){
 				setErrmessage(err.reason)
-			}else
-				Router.go('/Dashboard')
+			}else{
+				const history = useHistory()
+					history.push('/Dashboard')
+			}
+				// Router.go('/Dashboard')
 			// else{
 			// 	if(Meteor.isCordova){
 			// 		MobileDB.remove({})
@@ -117,6 +120,7 @@ export function Login(){
 	}
 	return(
 		<Grid container direction='row' className={classes.LoginContainer} >
+			{Meteor.userId()?<Redirect to="/Dashboard"/>:""}
 			<Hidden smDown>
 				<Grid item md={7} lg={8} className={classes.displayimage} >
 				</Grid>
@@ -149,12 +153,12 @@ export function Login(){
 							<Grid item >
 								<Grid container direction="row" alignItems="center" className={classes.otherStuff} >
 									<Grid item >
-										<Link href={hrefs.forgotPassword} ><Typography>Forgot Password?</Typography></Link>
+										<MaterialLink href={hrefs.forgotPassword} ><Typography>Forgot Password?</Typography></MaterialLink>
 									</Grid>
 								</Grid>
 								<Grid container direction="row" justify="space-between" alignItems="center" className={classes.otherStuff} >
 									<Grid item >
-										<Link href={hrefs.signup}><Typography>Sign up</Typography></Link>
+										<MaterialLink href={hrefs.signup}><Typography>Sign up</Typography></MaterialLink>
 									</Grid>
 									<Grid item >
 										<Button variant="outlined" color="primary" type="submit" >Login</Button>
@@ -173,10 +177,10 @@ export function Login(){
 						</Grid>
 						<Grid container direction='row' justify="space-between" alignItems="flex-end" className={classes.loginFooter}>
 							<Grid item >
-								<Link><Typography variant='body2'>Terms & agreements</Typography></Link>
+								<MaterialLink><Typography variant='body2'>Terms & agreements</Typography></MaterialLink>
 							</Grid>
 							<Grid item >
-								<Link><Typography variant='body2'>Policy</Typography></Link>
+								<MaterialLink><Typography variant='body2'>Policy</Typography></MaterialLink>
 							</Grid>
 						</Grid>
 					</Paper>

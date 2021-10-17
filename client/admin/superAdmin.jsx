@@ -4,7 +4,7 @@ import moment from 'moment'
 import { CardCounter } from '../Layouts/CardCounter.jsx'
 import { TableLister, TablewithSearch } from '../Layouts/TableLister.jsx'
 import GetIcon from '../Layouts/GetIcon.jsx'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import Typography from '@material-ui/core/Typography'
 import InputLabel from '@material-ui/core/InputLabel'
 import Input from '@material-ui/core/Input'
@@ -64,7 +64,7 @@ export function SuperAdmin(props){
 		setEditPlan(x)
 	}
 	if(props.param != state.name){
-		Meteor.call('SuperAdmin',{getData:props.param,type:'table'},(err,res)=>{res?setState({data:res,name:props.param}):false})
+		Meteor.call('SuperAdmin',{getData:props.param,type:'table'},(err, res)=>{res?setState({data:res,name:props.param}):false})
 	}
 	if(!Roles.userIsInRole(Meteor.userId(), ['SuperAdmin'], 'CareLocation'))
 		Router.go('/Dashboard')
@@ -375,4 +375,69 @@ function ToolDrawerContent(props){
 				</Grid>
 			</Grid>
 		</form>)
+}
+
+
+
+
+export const SuperAdminDashboardMenu = () => {
+	const items = new Array()
+	items.push(
+		{
+			MenuName:'Dashboard',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Dashboard'
+		},{
+			MenuName:'Company',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Company'
+		},{
+			MenuName:'Owner',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Owner'
+		},{
+			MenuName:'Caregivers',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Caregivers'
+		},{
+			MenuName:'Patients',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Patients'
+		},{
+			MenuName:'Divider',
+		},{
+			MenuName:'Service Plans',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/ServicePlans'
+		},{
+			MenuName:'Disputes',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Disputes'
+		},{
+			MenuName:'Divider',
+		},{
+			MenuName:'Developer',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Dev'
+		},{
+			MenuName:'Settings',
+			Moremenu:false,
+			iconTagName:'DashboardIcon',
+			href:'/Admin/Settings'
+		},{
+			MenuName:'Logout',
+			Moremenu:false,
+			iconTagName:'AccessAlarmIcon',
+			href:'',
+		}
+	)
+	return items
 }

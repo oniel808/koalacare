@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor';
 
 import GetIcon from './GetIcon.jsx'
 import Card from '@material-ui/core/Card';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import Grid from '@material-ui/core/Grid';
@@ -13,20 +13,20 @@ import { Button, Link } from '@material-ui/core';
 var useStyles = makeStyles((theme)=>({
 	cardCounter:{
 		margin:5,
-		backgroundColor:'rgb(2, 136, 209) !important'
+		backgroundColor:'rgb(2, 136, 209)'
 	},
 	cardCounterNav:{
 		paddingBottom:4,
-		color:'white'
+		color:'#4D4D4D'
 	},
 	cardCounterMiddle:{
 		paddingBottom:5,
-		color:'white',
+		color:'#4D4D4D',
 		paddingTop:5
 	},
 	cardCounterBottom:{
-		paddingTop:5,	
-		color:'white',
+		paddingTop:5,
+		color:'#4D4D4D',
 		paddingBottom:0,
 	},
 	CardWrapper:{
@@ -48,9 +48,10 @@ export function CardCounter(props){
 	return(
 		<React.Fragment>
 			{props.cardItems.map((o,i)=>{
+				console.log(o)
 				return (
 					<Grid item xs={xs?xs:12} sm={sm?sm:12} md={md?md:12} lg={lg?lg:12} xl={xl?xl:12} key={i}>
-						<Cards classes={classes} o={o} />
+						<Cards classes={classes} customStyle={o.style} o={o} />
 					</Grid>
 				)
 			})}
@@ -58,19 +59,19 @@ export function CardCounter(props){
 	)
 }
 function Cards(props){
-	const { classes, o } = props
+	const { classes, customStyle, o } = props
 	const [raiser, setRaiser] = React.useState(false)
 	function handleHover(x){
 		setRaiser(x)
 	}
 	return(
-		<Card raised={raiser} onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} className={classes.cardCounter} >
+		<Card raised={raiser} onMouseEnter={()=>handleHover(true)} onMouseLeave={()=>handleHover(false)} className={`${classes.cardCounter} ${customStyle}` } >
 			<CardContent className={classes.CardWrapper}>
-				<Grid className={classes.cardCounterNav} container justify="flex-end" direction="row" >
+				<Grid className={classes.cardCounterNav} container justify="flex-end" direction="row">
 					<Grid item >
 						<Grid container justify="space-between" alignItems="flex-start">
 							<Grid item>
-								<Typography component={o.link?Link:''} href={o.link} style={{textDecoration:'none', color:'#fff'}}>{o.Goto}</Typography>
+								<Typography component={o.link?Link:''} href={o.link} style={{textDecoration:'none', color:'#4D4D4D'}}>{o.Goto}</Typography>
 							</Grid>
 							<Grid item>
 								<GetIcon icon='ArrowForwardIosIcon' />

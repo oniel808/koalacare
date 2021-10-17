@@ -1,15 +1,15 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import { Grid, Avatar, Typography, Divider, Paper, Tab, Tabs,} from '@material-ui/core' 
-import { makeStyles, withStyles } from '@material-ui/core/styles'
+import { makeStyles, withStyles } from '@mui/styles'
 import { withTracker } from 'meteor/react-meteor-data'
 import { CardCounter } from './CardCounter.jsx'
 import { infoCards as CaregiverCards, 
-				 CaregiverPatientSchedule, scheduleTabs as CaregiverTabs
+				 CaregiverPatientSchedule, CaregiverCustomSchedule, scheduleTabs as CaregiverTabs
 } from '../Caregiver/Caregiver.jsx'
 import { infoCards as PatientCards, 
 				 PatientToCaregiver as PatientContent} from '../Patient/Patient.jsx'
-import moment from 'moment'
+import Moment from 'react-moment'
 import {
 	Scheduler,
 	DayView,
@@ -32,6 +32,7 @@ const useStyles = makeStyles((theme) =>({
 	},
 	targetProfileHolder:{
 		paddingBottom:theme.spacing(1),
+		paddingLeft:theme.spacing(5)
 	},
 	profileWrapper:{
 		paddingLeft:10,
@@ -57,18 +58,6 @@ const useStyles = makeStyles((theme) =>({
 	nameHolder:{
 		paddingTop:theme.spacing(3),
 	},
-	calendarHeader:{
-		paddingTop:theme.spacing(1),
-		paddingBottom:theme.spacing(1),
-	},
-	calendarWrapper:{
-		paddingTop:theme.spacing(3),
-		paddingBottom:theme.spacing(3)
-	},
-	calendar:{
-		marginRight:30,
-		marginLeft:30,
-	}
 }))
 
 export const ViewProfile = withTracker((props) => {
@@ -132,12 +121,12 @@ function ProfileContent(props){
 const CaregiverContent = () => {
 	return (
 		<React.Fragment>
-			<CustomSchedule tabs={CaregiverTabs?CaregiverTabs:[]}/>
+			<CaregiverCustomSchedule tabs={CaregiverTabs?CaregiverTabs:[]}/>
 		</React.Fragment>
 	)
 }
 
-export const ProfileNameHolder = () =>{
+export const ProfileNameHolder = (props) =>{
 		let classes = useStyles()
 		const { data } = props
 	/*{
@@ -156,10 +145,10 @@ export const ProfileNameHolder = () =>{
 			<Grid item md={12} sm={12} lg={8} >
 				<Grid container direction="column" className={classes.nameHolder}>
 					<Grid item>
-						<Typography>{moment().format('LLLL')}</Typography>
+						<Typography><Moment interval={1000} format="LLL"/></Typography>
 					</Grid>
 					<Grid item>
-						<Typography variant="h5">Hi, {data.name?data.name:'Name'}</Typography>
+						<Typography variant="h5" style={{paddingLeft:10}}>Hi, {data.name?data.name:'Name'}</Typography>
 					</Grid>
 					{/* <Grid item>
 						<Typography>{data.CompanyName?data.CompanyName:"Company Name"}</Typography>
@@ -192,9 +181,11 @@ export const TargetNameHolder = (props) => {
 					<Grid item>
 						<Typography variant="body1">{data.name?data.name:'Name'}</Typography>
 					</Grid>
-					{/* <Grid item>
+					{
+					/* <Grid item>
 						<Typography>{data.CompanyName?data.CompanyName:"Company Name"}</Typography>
-					</Grid> */}
+					</Grid> */
+					}
 				</Grid>
 			</Grid>
 		</Grid>
@@ -233,81 +224,6 @@ export const ProfileImage = () => {
 	return (
 		<React.Fragment>
 			
-		</React.Fragment>
-	)
-}
-
-export const CustomSchedule = (props) => {
-	let classes = useStyles()
-	const {type} = props
-	const StyledTabs = withStyles({
-		indicator: {
-			display: 'flex',
-			justifyContent: 'center',
-			backgroundColor: 'transparent',
-			'& > span': {
-				maxWidth: 40,
-				width: '100%',
-				backgroundColor: '#635ee7',
-			},
-		},
-	})((props) => <Tabs {...props} TabIndicatorProps={{ children: <span /> }} />)
-	const StyledTab = withStyles((theme) => ({
-		root: {
-			textTransform: 'none',
-			color: '#000',
-			fontWeight: theme.typography.fontWeightRegular,
-			fontSize: theme.typography.pxToRem(15),
-			marginRight: theme.spacing(1),
-			'&:focus': {
-				opacity: 1,
-			},
-		},
-	}))((props) => <Tab disableRipple {...props} />)
-	const data = {
-		name:'sample Name',
-		subtitle:'',
-		// profilePicture:url,
-		// action:[{call}, {video call}, {message}],
-		// date:
-	}
-	//scheduleTabs = ["tab 1", "tab 2"]
-	const { tabs } = props
-	const [tabHandler, setTabHandler] = React.useState(0)
-	const handleChange = (e,newValue) => setTabHandler(newValue)
-	return (
-	<React.Fragment>
-		<Grid container justify="center">
-			<Grid item>
-				<StyledTabs value={tabHandler} onChange={handleChange} aria-label="styled tabs example">
-					{tabs.map((o,i)=>{return (<StyledTab label={o} key={i} />)})}
-				</StyledTabs>
-			</Grid>
-		</Grid>
-		<CustomScheduler Tab={tabHandler} type={type} />
-	</React.Fragment>
-	)
-}
-
-export const CustomScheduler = (props) =>{
-	let classes = useStyles()
-	const { Tab } = props
-	return (
-		<React.Fragment>
-			<Grid container justify={Tab?"center":"flex-start"} className={classes.calendarWrapper}>
-				<Grid component={Paper} item md={Tab?11:6} className={classes.calendar} >
-					<Typography align="center" variant="h6" className={classes.calendarHeader}>
-						{Tab == 0?"Reminders":"Patient List"}
-						</Typography>
-					<Scheduler height={660}>
-						{Tab == 0?
-						<DayView startDayHour={0} endDayHour={24} />:
-						<WeekView startDayHour={0} endDayHour={24} />
-						}
-						<Appointments />
-					</Scheduler>
-				</Grid>
-			</Grid>
 		</React.Fragment>
 	)
 }

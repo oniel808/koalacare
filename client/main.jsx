@@ -3,32 +3,71 @@ import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import './router.jsx'
 import { MuiThemeProvider } from '@material-ui/core'
+
 import  NavBar  from './home/NavBar.jsx'
 import HomeTheme from './home/HomeTheme.jsx'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import { Header, Footer } from './home/home.jsx'
 import { Helmet } from 'react-helmet'
-const useStyles = makeStyles((g)=>({
-	toolbar: g.mixins.toolbar,
-	})
-)
-export function Main(props){
-	Meteor.subscribe("dashboardMenu")
-	const classes = useStyles()
-	const { Content, Title } = props
-	console.log(Content)
+import Homepage from './home/homeContent.jsx'
+import Login from './home/LoginPage'
+import Dashboard from './Layouts/Dashboard'
+import { useTracker } from 'meteor/react-meteor-data';
+import CssBaseline from "@mui/material/CssBaseline";
+
+import { browserHistory, IndexRoute } from 'react-router'
+import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { Page404 } from './Layouts/Page404'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+const Main = (props)=> {
+	const { Content, Title, children } = props
 	return (
-		<React.StrictMode>
-			<Helmet><title>{Title?Title:"KoalaCare"}</title></Helmet>
-			<MuiThemeProvider theme={HomeTheme}>
-				{Content?Content.props?"":Content.props.home == "home"?<navWToolbar/>:'':false}
+		<>
+			<Helmet>
+				<title>KoalaCare</title>
+				<style>{'body { background-color: red; }'}</style>
+			</Helmet>
+			<ThemeProvider theme={HomeTheme}>
+				<CssBaseline />
 				<Header/>
-				{Content}
+				<Homepage />
 				<Footer/>
-			</MuiThemeProvider>
-		</React.StrictMode>
+			</ThemeProvider >
+		</>
 	)
 }
-function navWToolbar(){
-	return(<React.Fragment><NavBar /><div className={classes.toolbar} /></React.Fragment>)
+Meteor.startup(()=>{
+	render(
+		<Router>
+			<Switch>
+				<Route exact path="/" component={Main}/>
+				{
+				Meteor.userId()?
+				<Route path="/Dashboard" component={LoadtoRoute}/>:
+				<Route path="/login" component={Login}/>
+				}
+				<Route path="*" component={Page404}/>
+				</Switch>
+		</Router>,
+		document.getElementById("react-target")
+	)
+})
+
+
+const LoadtoRoute = () =>{
+	if(LoadDashboard()){
+		return (
+		<>
+			<ThemeProvider theme={HomeTheme}>
+				<Dashboard/>
+			</ThemeProvider >
+		</>)
+	}else
+	return 'loading!!!!!!!!!!!!!!!!!'
 }
+
+const LoadDashboard = () => useTracker(()=> {
+	let roleSubscription = Meteor.subscribe("loadRoles", Meteor.userId())
+	return roleSubscription.ready()
+},[])

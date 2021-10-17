@@ -1,6 +1,6 @@
-import { createMuiTheme } from '@material-ui/core/styles'
+import { createTheme } from '@mui/material/styles'
 import {cyan} from '@material-ui/core/colors'
-export default HomeTheme = createMuiTheme({
+export default HomeTheme = createTheme({
   palette: {
     primary: {
       main: '#66bb6a',

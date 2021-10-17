@@ -4,12 +4,16 @@ import GetIcon from '../Layouts/GetIcon.jsx'
 
 import { AppBar, Toolbar, IconButton, Typography, Button, Container, Hidden, Grow, Paper, ClickAwayListener, MenuList, MenuItem, Popper, Grid, Link, Fade, Badge} from '@material-ui/core'
 import Avatar from '@material-ui/core/Avatar'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 export default function NavBar(props){
 	const {sidebar} = props
-	const useStyles = makeStyles((theme) => ({
+import { createTheme } from '@mui/material/styles'
+	const theme = createTheme()
+	// console.log(theme)
+	const useStyles = makeStyles((x) => ({
 		menuButton: {
-			marginRight: theme.spacing(2),
+			marginRight: 2,
+			// marginRight: theme.spacing(2),
 		},
 		title: {
 			flexGrow: 1,
@@ -29,12 +33,10 @@ export default function NavBar(props){
 	// return focus to the button when we transitioned from !open -> open
 	const prevOpen = React.useRef(open)
 	return(
-		<AppBar position={'fixed'} className={classes.appBar}>
-			<Toolbar>
-				<UserLoggedin/>
-			</Toolbar>
-		</AppBar>
-	)
+		<React.Fragment>
+			<UserLoggedin/>
+		</React.Fragment>
+		)
 	function UserLoggedin(){
 		const [openAnchorEl, setOpenUser] = React.useState({userSubmenu:null, notification:null})
 		const handleOpenUser = (event) => {
@@ -75,30 +77,32 @@ export default function NavBar(props){
 		if(Meteor.userId())
 			return(
 				<React.Fragment>
-					<Hidden mdUp>
-						<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
-							<GetIcon icon='MenuIcon'/>
-						</IconButton>
-					</Hidden>
-					<Typography variant="h6" className={classes.title}>
-						KoalaCare
-					</Typography>
-					<Button onClick={handleOpenUser} data="notification">
-						<Badge badgeContent={4} color="primary">
-							<GetIcon icon="NotificationsIcon" style={{float:'right', position:'relative', marginTop:'auto', color:'#fff'}}/>
-						</Badge>
-					</Button>
-					<Button onClick={handleOpenUser} data="userSubmenu">
-						<Grid container justify="space-between" alignItems="center">
-							<Grid item>
-								<Avatar src="/assets/ico.png" style={{float:'left'}}/>
-							</Grid>
-							<Grid item>
-								<GetIcon icon="ArrowDropDownIcon" style={{float:'right', position:'relative', marginTop:'auto', color:'#fff'}}/>
-							</Grid>
+					<Grid container justify="space-between">
+						<Grid item>
+							<Hidden mdUp>
+								<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
+									<GetIcon icon='MenuIcon'/>
+								</IconButton>
+							</Hidden>
 						</Grid>
-					</Button>
-					
+						<Grid item>
+							<Button onClick={handleOpenUser} data="notification">
+								<Badge badgeContent={4} color="primary">
+									<GetIcon icon="NotificationsIcon" style={{float:'right', position:'relative', marginTop:'auto', color:'#4D4D4D'}}/>
+								</Badge>
+							</Button>
+							<Button onClick={handleOpenUser} data="userSubmenu">
+								<Grid container justify="space-between" alignItems="center">
+									<Grid item>
+										<Avatar src="/assets/ico.png" style={{float:'left'}}/>
+									</Grid>
+									<Grid item>
+										<GetIcon icon="ArrowDropDownIcon" style={{float:'right', position:'relative', marginTop:'auto', color:'#4D4D4D'}}/>
+									</Grid>
+								</Grid>
+							</Button>
+						</Grid>
+					</Grid>
 					<Popper className={classes.userSubMenuPopper} open={Boolean(openAnchorEl.userSubmenu)} placement="bottom-end" anchorEl={openAnchorEl.userSubmenu} transition>
 					{({ TransitionProps }) => (
 						<ClickAwayListener onClickAway={handleCloseUserSubmenu}>

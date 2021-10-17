@@ -51,7 +51,7 @@ if(Meteor.isServer){
 	 onBeforeUpload(file) {
 			if (file.size <= 10485760 && /doc|docx|pdf/i.test(file.extension)) {
 				return true;
-			} else {
+			}else{
 				return 'Please upload CV, with size equal or less than 10MB';
 			}
 		}
@@ -93,8 +93,8 @@ if(Meteor.isServer){
 		roleInit()
 		// ServicePlans.remove({})
 		// Meteor.users.remove({_id:"RaPSfLScqZGa6Btv6"})
-		console.log(HealthCareAgency.find().fetch())
-		console.log(Meteor.users.find().fetch())
+		// console.log(HealthCareAgency.find().fetch())
+		// console.log(Meteor.users.find().fetch())
 		SuperAdminInit()
 	})
 	if (Meteor.isServer) {
@@ -560,9 +560,8 @@ if(Meteor.isServer){
 		if(data){
 			// console.log(Meteor.roleAssignment.find({ '_id': data }))
 			Meteor.roleAssignment.find({ '_id': data })
-		}
-		else
 			self.ready()
+		}
 	})
 	function registerToCompany(arr){
 		console.log(arr)

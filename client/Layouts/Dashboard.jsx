@@ -5,10 +5,10 @@ import NavBar from '../home/NavBar.jsx'
 import GetIcon from './GetIcon.jsx'
 import { CardCounter } from './CardCounter.jsx'
 import ThemeDashboard from './ThemeDashboard.jsx'
-import dashboardMenu from	'../../imports/js/dashboardMenu.jsx'
+import { BrowserRouter as Router, Switch, Route, Link as ReactLink, Redirect } from 'react-router-dom'
 
 import { MuiThemeProvider } from '@material-ui/core'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
 import CssBaseline from '@material-ui/core/CssBaseline'
@@ -18,6 +18,7 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ClickAwayListener from '@material-ui/core/ClickAwayListener'
 import ListItemText from '@material-ui/core/ListItemText'
 import Hidden from '@material-ui/core/Hidden'
 import IconButton from '@material-ui/core/IconButton'
@@ -26,12 +27,17 @@ import Button from '@material-ui/core/Button'
 import Collapse from '@material-ui/core/Collapse'
 import Avatar from '@material-ui/core/Avatar'
 import Grid from '@material-ui/core/Grid'
+import Badge from '@material-ui/core/Badge'
+import Fade from '@material-ui/core/Fade'
 import Card from '@material-ui/core/Card'
+import Popper from '@material-ui/core/Popper'
 import CardContent from '@material-ui/core/CardContent'
 import Box from '@material-ui/core/Box'
 import { ReactiveVar } from 'meteor/reactive-var'
 import Container from '@material-ui/core/Container'
 import Link from '@material-ui/core/Link'
+import Paper from '@material-ui/core/Paper'
+import MenuList from '@material-ui/core/MenuList'
 
 import InboxIcon from '@material-ui/icons/MoveToInbox'
 import MailIcon from '@material-ui/icons/Mail'
@@ -40,13 +46,18 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 
+import { CaregiverDashboardMenu, Caregiver, Friends } from '../Caregiver/Caregiver';
+import { ClientDashboardMenu } from '../Client/Client';
+import { SuperAdminDashboardMenu } from '../admin/superAdmin';
+import { useTracker } from 'meteor/react-meteor-data';
+import { Page404 } from './Page404'
+import { createTheme } from '@mui/material/styles';
 const drawerWidth = 260
-const useStyles = makeStyles((theme)=>({
+
+theme = createTheme()
+const useStyles = makeStyles((x)=>({
 	root: {
 		display: 'flex',
-	},
-	appBar: {
-		zIndex: theme.zIndex.drawer + 1,
 	},
 	drawer:{
 		minWidth:drawerWidth,
@@ -65,9 +76,9 @@ const useStyles = makeStyles((theme)=>({
 	contentMain:{
 		flexGrow:1,
 		padding:theme.spacing(3),
-		height:'calc(100vh - 64px)',
+		// height:'calc(100vh - 64px)',
 		overflowY:'auto',
-		marginTop:64
+		marginTop:0 // default:64
 	},
 	swipeableDrawer:{
 		width:drawerWidth
@@ -89,7 +100,21 @@ const useStyles = makeStyles((theme)=>({
 }))
 function ListDashboard(props){
 	itemIndex = new Object()
-	const items = dashboardMenu()
+	let items = []
+	// Tracker.autorun(() => {
+	// 	console.log('wew')
+	// 	console.log(LoadDashboard())
+	// if(LoadDashboard())
+	// 	console.log(Roles.userIsInRole(Meteor.userId(),'Caregiver'))
+	// })
+	// console.log(items)
+
+	if(Roles.userIsInRole(Meteor.userId(),'Caregiver'))
+		items = CaregiverDashboardMenu()
+	if(Roles.userIsInRole(Meteor.userId(),'Owner'))
+		items = ClientDashboardMenu()
+	if(Roles.userIsInRole(Meteor.userId(), ['SuperAdmin'], 'CareLocation'))
+		items = SuperAdminDashboardMenu()
 	items.map((o)=>{
 		itemIndex = {[o.MenuName]:false, ...itemIndex}
 	})
@@ -116,16 +141,18 @@ function ListDashboard(props){
 
 	function ListItemforDrawer(o,i){
 		return(
-			<Link href={o.href} style={{ textDecoration: 'none' }}>
-				<ListItem button onClick={()=>handleClick(o.MenuName)} key={`k-${i}`}>
-					<ListItemIcon>
-						<GetIcon icon={o.iconTagName}/>
-					</ListItemIcon>
-					<ListItemText disableTypography
-	      	  primary={<Typography type="body2" color="textSecondary">{o.MenuName}</Typography>} />
-					{o.Moremenu?dashState[o.MenuName] ? <ExpandLess /> : <ExpandMore />:false}
-				</ListItem>
-			</Link>
+			<ReactLink to={o.href} style={{ textDecoration: 'none' }}>
+				<Link style={{ textDecoration: 'none' }}>
+					<ListItem button onClick={()=>handleClick(o.MenuName)} key={`k-${i}`}>
+						<ListItemIcon>
+							<GetIcon icon={o.iconTagName}/>
+						</ListItemIcon>
+						<ListItemText disableTypography
+							primary={<Typography type="body2" color="textSecondary">{o.MenuName}</Typography>} />
+						{o.Moremenu?dashState[o.MenuName] ? <ExpandLess /> : <ExpandMore />:false}
+					</ListItem>
+				</Link>
+			</ReactLink>
 		)
 	}
 
@@ -134,15 +161,17 @@ function ListDashboard(props){
 		return (
 			<Collapse in={dashState[o.MenuName]} timeout="auto">
 				{o.subMenu.map((k,l)=>(
-					<Link href={k.href} style={{ textDecoration: 'none'}} key={`k-${i}-${l}`}>
-						<ListItem button style={{paddingLeft:30}}>
-							<ListItemIcon>
-								<GetIcon icon={k.iconTagName}/>
-							</ListItemIcon>
-							<ListItemText disableTypography
-	       				primary={<Typography type="body2" color="textSecondary">{k.MenuName}</Typography>} />
-						</ListItem>
-					</Link>
+					<ReactLink to={k.href}>
+						<Link style={{ textDecoration: 'none'}} key={`k-${i}-${l}`}>
+							<ListItem button style={{paddingLeft:30}}>
+								<ListItemIcon>
+									<GetIcon icon={k.iconTagName}/>
+								</ListItemIcon>
+								<ListItemText disableTypography
+									primary={<Typography type="body2" color="textSecondary">{k.MenuName}</Typography>} />
+							</ListItem>
+						</Link>
+					</ReactLink>
 				))}
 			</Collapse>
 		)
@@ -168,64 +197,115 @@ function DrawerHeader(props){
 	)
 }
 
+const LoadDashboard = () => useTracker(()=> {
+	let roleSubscription = Meteor.subscribe("loadRoles", Meteor.userId())
+	return roleSubscription.ready()
+},[])
 
 export default function Dashboard({DashboardContent}){
 	const classes = useStyles()
+	Meteor.subscribe("loadRoles", Meteor.userId())
 	const [state, setState] = React.useState(false)
+	console.log(Meteor.user())
+
 	Accounts.onLogout(()=>{
 		Router.go('/login')
 	})
 	toggleDrawer = (open) => (event) => {
 		setState(open)
 	}
-	Meteor.subscribe("loadRoles", Meteor.userId())
+	const [openAnchorEl, setOpenUser] = React.useState({userSubmenu:null, notification:null})
+	const handleOpenUser = (event) => {
+		var anchor = event.currentTarget.getAttribute("data")
+		setOpenUser( prevState => (openAnchorEl[anchor] ? {...prevState, [anchor]:null} : {...prevState, [anchor]:event.currentTarget}))
+		console.log(openAnchorEl)
+	}
+	const handleCloseUserSubmenu = (event) => {
+		setOpenUser(prevState=>({...prevState, userSubmenu:null}))
+	}
+	const handleCloseUserNotification = (event) => {
+		setOpenUser(prevState=>({...prevState, notification:null}))
+	}
+
 	var user = Meteor.user()
-	return(
-		<React.Fragment>
-			<MuiThemeProvider theme={ThemeDashboard}>
-				<div className={classes.root}>
-					<CssBaseline />
-					<NavBar sidebar={setState}/>
-					<Hidden smDown>
-						<Drawer
-							className={classes.drawer}
-							variant="permanent"
-							classes={{
-								paper: classes.drawerPaper,
-							}}
-						>
-							<Toolbar />
-							<div className={classes.drawerContainer}>
-								<Divider />
-								<ListDashboard />
-							</div>
-						</Drawer>
-					</Hidden>
-					<Hidden mdUp>
-					{['left'].map((anchor,i) => (
-						<React.Fragment key={i}>
-							<SwipeableDrawer
-								anchor='left'
-								open={state}
-								onClose={toggleDrawer(false)}
-								onOpen={toggleDrawer(true)}
+
+	const LoadtoDashboard = ()=>{
+		if(LoadDashboard()){
+			if(Roles.userIsInRole(Meteor.userId(),'Caregiver'))
+				return <Caregiver />
+			else if(Roles.userIsInRole(Meteor.userId(),'Owner'))
+				return <Client />
+		}else
+			return null
+	// if(Roles.userIsInRole(Meteor.userId(), ['SuperAdmin'], 'CareLocation'))
+	}
+	if(LoadDashboard())
+		return (
+			<React.Fragment>
+			<Router>
+				{Meteor.userId()?"":<Redirect to="/Login"/>}
+				<MuiThemeProvider theme={ThemeDashboard}>
+					<div className={classes.root}>
+						<CssBaseline />
+						<Hidden smDown>
+							<Drawer
+								className={classes.drawer}
+								variant="permanent"
 								classes={{
 									paper: classes.drawerPaper,
-								}}>
-								<DrawerHeader user={user}/>
-								<Divider />
-								<ListDashboard />
-							</SwipeableDrawer>
-						</React.Fragment>
-					))}
-					</Hidden>
-					<main className={classes.contentMain}>
-						<div className={classes.rootMain}>
-							{DashboardContent}
-						</div>
-					</main>
-				</div>
-			</MuiThemeProvider>
+								}}
+							>
+								<Toolbar />
+								<div className={classes.drawerContainer}>
+									{/* <Divider /> */}
+										<ListDashboard />
+								</div>
+							</Drawer>
+						</Hidden>
+						<Hidden mdUp>
+						{['left'].map((anchor,i) => (
+							<React.Fragment key={i}>
+								<SwipeableDrawer
+									anchor='left'
+									open={state}
+									onClose={toggleDrawer(false)}
+									onOpen={toggleDrawer(true)}
+									classes={{
+										paper: classes.drawerPaper,
+									}}>
+									<DrawerHeader user={user}/>
+									<Divider />
+										<ListDashboard />
+								</SwipeableDrawer>
+							</React.Fragment>
+						))}
+						</Hidden>
+						<main className={classes.contentMain}>
+							<div className={classes.rootMain}>
+								<Grid container spacing={5} justify="space-between">
+									<Grid item md={8} sm={12} lg ={8} xs={12} style={{overflowY:'auto'}}>
+										<NavBar sidebar={setState}/>
+
+											<Route exact path="/Dashboard" component={LoadtoDashboard}/>
+											<Route path="/dashboard/friends" component={Friends}/>
+											{/* <Route component={Page404}/> */}
+
+											{/* {DashboardContent} */}
+									</Grid>
+									<Hidden smDown>
+										<Grid item md={4} lg={4} component={Paper} style={{maxWidth:250}}>
+											'report side'
+										</Grid>
+									</Hidden>
+								</Grid>
+							</div>
+						</main>
+					</div>
+				</MuiThemeProvider>
+				
+			</Router>
 		</React.Fragment>
-	)
+		)
+	else
+		return 'Loading...'
 }

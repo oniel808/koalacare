@@ -3,10 +3,13 @@ import { Typography, Button, Container, Box, Grid, Link, Hidden, AppBar, Toolbar
 import MenuIcon from '@material-ui/icons/Menu'
 import GetIcon from '../Layouts/GetIcon.jsx'
 import { green } from '@material-ui/core/colors'
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@mui/styles'
 import useMediaQuery from '@material-ui/core/useMediaQuery'
-import { useTheme } from '@material-ui/core/styles'
+import { useTheme } from '@mui/styles'
+import { createTheme } from '@mui/material/styles'
 
+
+const theme = createTheme()
 const useStyles = makeStyles((theme)=>({
 	navMenu:{
     color:'#2d3436'
@@ -16,7 +19,8 @@ const useStyles = makeStyles((theme)=>({
     boxShadow:'0px 0px 0px transparent'
   },
   menuButton:{
-    marginRight: theme.spacing(2),
+    // marginRight: theme.spacing(2),
+    marginRight: 2,
   },
   title:{
     marginRight:'auto',
@@ -71,9 +75,10 @@ const useStyles = makeStyles((theme)=>({
 	}
 }))
 export function Header(){
+	let dashboardLink = Meteor.userId()?'/Dashboard':'/Login'
 	nav = [
 		{title:'Home', href:'/', icon:"HomeIcon"},
-		{title:'Dashboard', href:'/Login', icon:"DashboardIcon"},
+		{title:'Dashboard', href:dashboardLink, icon:"DashboardIcon"},
 		{title:'Signup', href:'/Signup', icon:"PersonAddIcon"},
 		{title:'Services', href:'/Services', icon:"AmpStoriesIcon"},
 		{title:'About', href:'/About', icon:"InfoIcon"},

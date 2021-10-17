@@ -1,11 +1,13 @@
 import React from 'react'
-import { Typography, Button, Container, Box, Grid, Link, Hidden, AppBar, Toolbar, IconButton, Drawer, List, ListItem,	ListItemIcon, ListItemText } from '@material-ui/core'
+import { Typography, Button, Container, Box, Grid, Link, Hidden, AppBar, Toolbar, IconButton, Drawer, List, ListItem,	ListItemIcon, ListItemText } from '@mui/material'
 import MenuIcon from '@material-ui/icons/Menu'
 import GetIcon from '../Layouts/GetIcon.jsx'
 import { green } from '@material-ui/core/colors'
-import { makeStyles } from '@material-ui/core/styles'
-import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
+import { makeStyles } from '@mui/styles'
+// import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
 import Fade from '@material-ui/core/Fade'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+const theme = createTheme()
 const useStyles = makeStyles((theme)=>({
   s1:{
     position:'relative',
@@ -64,14 +66,14 @@ const useStyles = makeStyles((theme)=>({
     }
   }
 }))
-function Homepage(props){
+export default Homepage = (props)=>{
   const classes= useStyles()
   const { width } = props
-  console.log(isWidthUp('md',width))
+  // console.log(isWidthUp('md',width))
 	return(
 		<React.Fragment>
 			<Container maxWidth='lg'>
-				<Grid container className={classes.s1} alignItems={isWidthUp('md',width)?"flex-start":"center"}>
+				<Grid container className={classes.s1} alignItems={/*isWidthUp('md',width)?"flex-start":*/"center"}>
 					<Grid item lg={4} md={4} sm={12} xs={12}>
 						<Typography variant="h6">Koalacare lets you to automate your Timesheet for your health care Agency</Typography>
 						<Button variant="outlined" align="center">Learn more</Button>
@@ -89,9 +91,9 @@ function Homepage(props){
 							<img src="assets/img/homeImages/phonetimein.png" className="mobileTimeSheet" />
 						</Grid>
 						<Grid item lg={4} md={4} sm={12} xs={12}>
-							<Grid container direction="column" alignItems={isWidthUp('md',width)?"flex-start":"center"}>
+							<Grid container direction="column" alignItems={/*isWidthUp('md',width)?"flex-start":*/"center"}>
 								<Grid item>
-									<Typography variant="h6" align={isWidthUp('md',width)?"left":"center"}>Log your time in with your Mobile Phone</Typography>
+									<Typography variant="h6" align={/*isWidthUp('md',width)?"left":*/"center"}>Log your time in with your Mobile Phone</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="caption"> your device lets you time in upon your arrival on your patient and keep on track on your record</Typography>
@@ -107,11 +109,11 @@ function Homepage(props){
 
 			<Grid container >
 				<Container maxWidth='lg'>
-					<Grid container className={classes.s1} direction={isWidthUp('md',width)?"row":"column-reverse"} >
+					<Grid container className={classes.s1} direction={/*isWidthUp('md',width)?"row":*/"column-reverse"} >
 						<Grid item lg={4} md={4} sm={12} xs={12}>
-							<Grid container direction="column" alignItems={isWidthUp('md',width)?"flex-start":"center"}>
+							<Grid container direction="column" alignItems={/*isWidthUp('md',width)?"flex-start":*/"center"}>
 								<Grid item>
-									<Typography variant="h6" align={isWidthUp('md',width)?"left":"center"}>It can easily track your time at ease to your smart watch</Typography>
+									<Typography variant="h6" align={/*isWidthUp('md',width)?"left":*/"center"}>It can easily track your time at ease to your smart watch</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="caption">soon be available on both apple watch and android watch</Typography>
@@ -130,4 +132,7 @@ function Homepage(props){
 		</React.Fragment>
 	)
 }
-export default withWidth()(Homepage)
+
+
+// export { Homepage }
+// export default withWidth()(Homepage)
