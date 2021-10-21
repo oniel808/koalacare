@@ -6,19 +6,20 @@ import { MuiThemeProvider } from '@material-ui/core'
 
 import  NavBar  from './home/NavBar.jsx'
 import HomeTheme from './home/HomeTheme.jsx'
+import ThemeDashboard from './Layouts/ThemeDashboard'
 import { makeStyles } from '@mui/styles'
 import { Header, Footer } from './home/home.jsx'
 import { Helmet } from 'react-helmet'
 import Homepage from './home/homeContent.jsx'
 import Login from './home/LoginPage'
 import Dashboard from './Layouts/Dashboard'
-import { useTracker } from 'meteor/react-meteor-data';
-import CssBaseline from "@mui/material/CssBaseline";
+import { useTracker } from 'meteor/react-meteor-data'
+import CssBaseline from "@mui/material/CssBaseline"
 
 import { browserHistory, IndexRoute } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
 import { Page404 } from './Layouts/Page404'
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { createTheme, ThemeProvider } from '@mui/material/styles'
 
 const Main = (props)=> {
 	const { Content, Title, children } = props
@@ -26,7 +27,6 @@ const Main = (props)=> {
 		<>
 			<Helmet>
 				<title>KoalaCare</title>
-				<style>{'body { background-color: red; }'}</style>
 			</Helmet>
 			<ThemeProvider theme={HomeTheme}>
 				<CssBaseline />
@@ -43,9 +43,9 @@ Meteor.startup(()=>{
 			<Switch>
 				<Route exact path="/" component={Main}/>
 				{
-				Meteor.userId()?
-				<Route path="/Dashboard" component={LoadtoRoute}/>:
-				<Route path="/login" component={Login}/>
+					Meteor.userId()?
+					<Route path="/Dashboard" component={LoadtoRoute}/>:
+					<Route path="/login" component={Login}/>
 				}
 				<Route path="*" component={Page404}/>
 				</Switch>
@@ -59,10 +59,11 @@ const LoadtoRoute = () =>{
 	if(LoadDashboard()){
 		return (
 		<>
-			<ThemeProvider theme={HomeTheme}>
+			<ThemeProvider theme={ThemeDashboard}>
 				<Dashboard/>
 			</ThemeProvider >
-		</>)
+		</>
+		)
 	}else
 	return 'loading!!!!!!!!!!!!!!!!!'
 }

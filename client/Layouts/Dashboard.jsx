@@ -7,7 +7,7 @@ import { CardCounter } from './CardCounter.jsx'
 import ThemeDashboard from './ThemeDashboard.jsx'
 import { BrowserRouter as Router, Switch, Route, Link as ReactLink, Redirect } from 'react-router-dom'
 
-import { MuiThemeProvider } from '@material-ui/core'
+// import { MuiThemeProvider } from '@material-ui/core'
 import { makeStyles } from '@mui/styles'
 import Drawer from '@material-ui/core/Drawer'
 import AppBar from '@material-ui/core/AppBar'
@@ -46,7 +46,7 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 
-import { CaregiverDashboardMenu, Caregiver, Friends } from '../Caregiver/Caregiver';
+import { CaregiverDashboardMenu, Caregiver } from '../Caregiver/Caregiver';
 import { ClientDashboardMenu } from '../Client/Client';
 import { SuperAdminDashboardMenu } from '../admin/superAdmin';
 import { useTracker } from 'meteor/react-meteor-data';
@@ -142,7 +142,7 @@ function ListDashboard(props){
 	function ListItemforDrawer(o,i){
 		return(
 			<ReactLink to={o.href} style={{ textDecoration: 'none' }}>
-				<Link style={{ textDecoration: 'none' }}>
+				{/* <Link style={{ textDecoration: 'none' }}> */}
 					<ListItem button onClick={()=>handleClick(o.MenuName)} key={`k-${i}`}>
 						<ListItemIcon>
 							<GetIcon icon={o.iconTagName}/>
@@ -151,7 +151,7 @@ function ListDashboard(props){
 							primary={<Typography type="body2" color="textSecondary">{o.MenuName}</Typography>} />
 						{o.Moremenu?dashState[o.MenuName] ? <ExpandLess /> : <ExpandMore />:false}
 					</ListItem>
-				</Link>
+				{/* </Link> */}
 			</ReactLink>
 		)
 	}
@@ -244,65 +244,60 @@ export default function Dashboard({DashboardContent}){
 			<React.Fragment>
 			<Router>
 				{Meteor.userId()?"":<Redirect to="/Login"/>}
-				<MuiThemeProvider theme={ThemeDashboard}>
-					<div className={classes.root}>
-						<CssBaseline />
-						<Hidden smDown>
-							<Drawer
-								className={classes.drawer}
-								variant="permanent"
+				<div className={classes.root}>
+					<CssBaseline />
+					<Hidden smDown>
+						<Drawer
+							className={classes.drawer}
+							variant="permanent"
+							classes={{
+								paper: classes.drawerPaper,
+							}}
+						>
+							<Toolbar />
+							<div className={classes.drawerContainer}>
+								{/* <Divider /> */}
+									<ListDashboard />
+							</div>
+						</Drawer>
+					</Hidden>
+					<Hidden mdUp>
+					{['left'].map((anchor,i) => (
+						<React.Fragment key={i}>
+							<SwipeableDrawer
+								anchor='left'
+								open={state}
+								onClose={toggleDrawer(false)}
+								onOpen={toggleDrawer(true)}
 								classes={{
 									paper: classes.drawerPaper,
-								}}
-							>
-								<Toolbar />
-								<div className={classes.drawerContainer}>
-									{/* <Divider /> */}
-										<ListDashboard />
-								</div>
-							</Drawer>
-						</Hidden>
-						<Hidden mdUp>
-						{['left'].map((anchor,i) => (
-							<React.Fragment key={i}>
-								<SwipeableDrawer
-									anchor='left'
-									open={state}
-									onClose={toggleDrawer(false)}
-									onOpen={toggleDrawer(true)}
-									classes={{
-										paper: classes.drawerPaper,
-									}}>
-									<DrawerHeader user={user}/>
-									<Divider />
-										<ListDashboard />
-								</SwipeableDrawer>
-							</React.Fragment>
-						))}
-						</Hidden>
-						<main className={classes.contentMain}>
-							<div className={classes.rootMain}>
-								<Grid container spacing={5} justify="space-between">
-									<Grid item md={8} sm={12} lg ={8} xs={12} style={{overflowY:'auto'}}>
-										<NavBar sidebar={setState}/>
+								}}>
+								<DrawerHeader user={user}/>
+								<Divider />
+									<ListDashboard />
+							</SwipeableDrawer>
+						</React.Fragment>
+					))}
+					</Hidden>
+					<main className={classes.contentMain}>
+						<div className={classes.rootMain}>
+							<Grid container spacing={5} justify="space-between">
+								<Grid item md={8} sm={12} lg ={8} xs={12} style={{overflowY:'auto'}}>
+									<NavBar sidebar={setState}/>
 
-											<Route exact path="/Dashboard" component={LoadtoDashboard}/>
-											<Route path="/dashboard/friends" component={Friends}/>
-											{/* <Route component={Page404}/> */}
-
-											{/* {DashboardContent} */}
-									</Grid>
-									<Hidden smDown>
-										<Grid item md={4} lg={4} component={Paper} style={{maxWidth:250}}>
-											'report side'
-										</Grid>
-									</Hidden>
+										<LoadtoDashboard/>
+										{/* <Route component={Page404}/> */}
+										{/* {DashboardContent} */}
 								</Grid>
-							</div>
-						</main>
-					</div>
-				</MuiThemeProvider>
-				
+								<Hidden smDown>
+									<Grid item md={4} lg={4} component={Paper} style={{maxWidth:250}}>
+										'report side'
+									</Grid>
+								</Hidden>
+							</Grid>
+						</div>
+					</main>
+				</div>
 			</Router>
 		</React.Fragment>
 		)

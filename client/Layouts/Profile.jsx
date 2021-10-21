@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
-import { Grid, Avatar, Typography, Divider, Paper, Tab, Tabs,} from '@material-ui/core' 
+import { Grid, Avatar, Typography, Divider, Paper, Tab, Tabs, Button } from '@material-ui/core' 
 import { makeStyles, withStyles } from '@mui/styles'
 import { withTracker } from 'meteor/react-meteor-data'
 import { CardCounter } from './CardCounter.jsx'
@@ -10,6 +10,8 @@ import { infoCards as CaregiverCards,
 import { infoCards as PatientCards, 
 				 PatientToCaregiver as PatientContent} from '../Patient/Patient.jsx'
 import Moment from 'react-moment'
+
+import { createTheme } from '@mui/material/styles'
 import {
 	Scheduler,
 	DayView,
@@ -20,7 +22,11 @@ import {
 } from '@devexpress/dx-react-scheduler-material-ui';
 import { Timestamp } from 'bson'
 const ProfileColl = new Meteor.Collection('ProfileColl');
+const theme = createTheme()
 const useStyles = makeStyles((theme) =>({
+	agencyButton:{
+		marginLeft:50
+	},
   small: {
     width: theme.spacing(3),
     height: theme.spacing(3),
@@ -226,4 +232,15 @@ export const ProfileImage = () => {
 			
 		</React.Fragment>
 	)
+}
+
+export const ActionButtons=(props)=>{
+	const { size='medium' } = props
+	const classes = useStyles()
+	return(
+	<>
+		<Button className={classes.agencyButton} size={size}>Call</Button>
+		<Button className={classes.agencyButton} size={size}>Message</Button>
+		<Button className={classes.agencyButton} size={size}>Apply</Button>
+	</>)
 }

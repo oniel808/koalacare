@@ -9,7 +9,7 @@ import GetIcon from '../Layouts/GetIcon.jsx'
 import moment from 'moment';
 import { Paper, Button, Divider, Radio, RadioGroup, InputLabel, FormLabel, 
 				FormControl, FormControlLabel, Input, TextField, Typography, Grid, Tab, Tabs,
-				Hidden } from '@material-ui/core'
+				Hidden, Card,CardMedia, CardContent, CardActions } from '@material-ui/core'
 import { ProfileNameHolder, TargetNameHolder, ProfileDivider, CustomSchedule} from '../Layouts/Profile.jsx'
 import {
 	Scheduler,
@@ -18,9 +18,12 @@ import {
 	Appointments,
 	AppointmentTooltip,
 	DragDropProvider
+	
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { BrowserRouter as Router, Switch, Route, Link as ReactLink, Redirect } from 'react-router-dom'
+
+import { ActionButtons } from '../Layouts/Profile'
 const theme = createTheme()
-console.log(theme)
 const useStyles = makeStyles((theme)=>({
 	profilePicture:{
 		maxWidth: 150,
@@ -50,10 +53,14 @@ const useStyles = makeStyles((theme)=>({
 	},
 	Patientstoday:{
 		backgroundImage:'linear-gradient(to bottom right, #F1F1F1, #73BBFF)'
-	}
+	},
+	friendlistContainer:{
+		paddingBottom:100,
+		paddingtop:100
+	},
 }))
 
-export const Caregiver=()=>{
+export const CaregiverDashboard =()=>{
 	console.log(theme)
 	var classes = useStyles()
 	const infoCards = 
@@ -89,7 +96,7 @@ export const Caregiver=()=>{
 		// date:
 	}
 	const PatientsProfileNameHolder = {
-		name:'sample Name',
+		name:"Patient's Sample Name",
 		subtitle:'',
 		// profilePicture:url,
 		// action:[{call}, {video call}, {message}],
@@ -115,6 +122,15 @@ export const Caregiver=()=>{
 	)
 }
 
+export const Caregiver = () => {
+	return(
+		<React.Fragment>
+			<Route exact path="/Dashboard" component={ CaregiverDashboard } />
+			<Route path="/Dashboard/friends" component={ FriendList } />
+			<Route path="/Dashboard/company" component={ Agency } />
+		</React.Fragment>
+	)
+}
 
 export const CaregiverCustomSchedule = (props) => {
 	let classes = useStyles()
@@ -168,7 +184,7 @@ export const CaregiverCustomSchedule = (props) => {
 	)
 }
 
-export const CaregiverCustomScheduler = (props) =>{
+export const CaregiverCustomScheduler = (props) => {
 	let classes = useStyles()
 	const { Tab } = props
 	const TargetProfileDetails =()=>{
@@ -208,27 +224,27 @@ export const CaregiverDashboardMenu = () => {
 		MenuName:'Dashboard',
 		Moremenu:false,
 		iconTagName:'DashboardIcon',
-		href:'/Dashboard'
+		href:'/dashboard'
 	},{
 		MenuName:'Health Care Agency',
 		Moremenu:false,
 		iconTagName:'DashboardIcon',
-		href:'/Dashboard/HealthCareAgency'
+		href:'/dashboard/company'
 	},{
 		MenuName:'Friends',
 		Moremenu:false,
 		iconTagName:'DashboardIcon',
-		href:'/Dashboard/Friends'
+		href:'/dashboard/Friends'
 	},{
 		MenuName:'Patients',
 		Moremenu:false,
 		iconTagName:'DashboardIcon',
-		href:'/Dashboard/Patient'
+		href:'/dashboard/Patient'
 	},{
 		MenuName:'Statistics',
 		Moremenu:false,
 		iconTagName:'DashboardIcon',
-		href:'/Dashboard/Statistics'
+		href:'/dashboard/Statistics'
 	},{
 		MenuName:'Divider',
 	},{
@@ -241,31 +257,97 @@ export const CaregiverDashboardMenu = () => {
 	return items
 }	
 
-class Friends extends React.Component {
-	constructor(props){
-		super(props)
-	}
-	render(){
-		return(
-			<>
-				<Grid container>
-					<Grid md={12}>
-						<Grid container justify="space-between">
-							<Grid md={5}>
-								<Button>Add friend</Button>
-							</Grid>
-							<Grid md={3}>
-								<TextField id="outlined-basic" label="Outlined" variant="outlined" />
-							</Grid>
+export const FriendList = (props) =>{
+
+	const classes = useStyles()
+	return(
+		<>
+			<Grid container component={Paper} className={classes.friendlistContainer} direction="column" >
+				<Typography variant="h5" style={{marginTop:15,paddingLeft:15, marginBottom:15}}>Friends</Typography>
+				<Grid container justify="space-between" spacing={2}>
+					<Grid md={5}>
+						<Button color="primary">Add friend</Button>
+					</Grid>
+					<Grid md={4}>
+					<TextField id="standard-basic" label="Search" variant="standard" />
+					</Grid>
+				</Grid>
+
+				{/* FriendList Wrapper */}
+					<Grid container>
+
+						<Grid lg={3} md={5} sm={5} xs={6} alignItems="center">
+							<Card>
+								{/* show cover photo */}
+								<CardMedia component="img" image={`${window.location.origin}/assets/img/dummyCoverPhoto.png`}/>
+								<CardContent>
+
+									<Typography gutterBottom variant="h5">
+										Name
+									</Typography>
+									<Typography variant="h6">
+										About
+									</Typography>
+									<Typography variant="body2" color="textSecondary" noWrap style={{textOverflow: '-o-ellipsis-lastline'}}>
+									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+									</Typography>
+								</CardContent>
+								<CardActions>	
+									<ActionButtons size="small"/>
+								</CardActions>
+							</Card>
+						</Grid>
+
+
+					</Grid>
+				{/* FriendList end Wrapper */}
+			</Grid>
+		</>
+	)
+}
+
+const Agency = () => {
+	const classes=useStyles()
+	return (
+		<>
+			<Grid container direction="column" component={Paper} style={{paddingBottom:100, marginBottom:150}}>
+				{/* agency header, cover photo */}
+				<Grid md={12} style={{paddingBottom:180, marginBottom:40, backgroundColor:"#EFEFEF", position:'relative', borderBottomLeftRadius:0, borderBottomRightRadius:0}} component={Paper}>
+				</Grid>
+				{/* agency body  profile picture, prefference button */}
+				<Grid md={12}>
+					<Grid container>
+						<Grid md={3}>
+							{/* profile picture */}
+
+						</Grid>
+						<Grid md={9}>
+							<Grid container>
+								<Grid md={9}>
+									<Typography>Name</Typography>
+								</Grid>
+								<Grid md={3}>
+									<Typography>2020-Active</Typography>
+								</Grid>
+							</Grid> 
 						</Grid>
 					</Grid>
 				</Grid>
-			</>
-		)
-	}
+				<Grid md={12}>
+					<ActionButtons/>
+				</Grid>
+				<Grid md={12}>
+					<Typography variant="h4" style={{paddingLeft:40,paddingRight:40,paddingTop:10}}>Company Description</Typography>
+					<Typography style={{paddingLeft:40,paddingRight:40, paddingTop:10, paddingBottom:40}}>
+						company descriptionx
+					</Typography>
+				</Grid>
+			</Grid>
+		</>
+	)
 }
 
-export { Friends }
+
 
 
 // export default function(){
