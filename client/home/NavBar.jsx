@@ -2,7 +2,7 @@ import React from 'react'
 import { Meteor } from 'meteor/meteor'
 import GetIcon from '../Layouts/GetIcon.jsx'
 
-import { AppBar, Toolbar, IconButton, Typography, Button, Container, Hidden, Grow, Paper, ClickAwayListener, MenuList, MenuItem, Popper, Grid, Link, Fade, Badge} from '@material-ui/core'
+import { AppBar, Toolbar, IconButton, Typography, Button, Container, Hidden, Grow, Paper, ClickAwayListener, MenuList, MenuItem, Popper, Grid, Link, Fade, Badge} from '@mui/material'
 import Avatar from '@material-ui/core/Avatar'
 import { makeStyles } from '@mui/styles'
 export default function NavBar(props){
@@ -77,7 +77,7 @@ import { createTheme } from '@mui/material/styles'
 		if(Meteor.userId())
 			return(
 				<React.Fragment>
-					<Grid container justify="space-between">
+					<Grid container justifyContent="space-between">
 						<Grid item>
 							<Hidden mdUp>
 								<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
@@ -92,7 +92,7 @@ import { createTheme } from '@mui/material/styles'
 								</Badge>
 							</Button>
 							<Button onClick={handleOpenUser} data="userSubmenu">
-								<Grid container justify="space-between" alignItems="center">
+								<Grid container justifyContent="space-between" alignItems="center">
 									<Grid item>
 										<Avatar src="/assets/ico.png" style={{float:'left'}}/>
 									</Grid>
@@ -113,7 +113,7 @@ import { createTheme } from '@mui/material/styles'
 											userSubMenu.map((o,i)=>{
 												return (
 													<MenuItem onClick={o.f} key={i} href={o.link} component={o.link?Link:''}>
-														<Grid container justify="space-between" alignItems="center" spacing={3} className={classes.userSubMenu}>
+														<Grid container justifyContent="space-between" alignItems="center" spacing={3} className={classes.userSubMenu}>
 															<Grid item>
 																<Typography >{o.name}</Typography>
 															</Grid>
@@ -142,7 +142,7 @@ import { createTheme } from '@mui/material/styles'
 											userSubMenu.map((o,i)=>{
 												return (
 													<MenuItem onClick={o.f} key={i} href={o.link} component={o.link?Link:''}>
-														<Grid container justify="space-between" alignItems="center" spacing={3} className={classes.notification}>
+														<Grid container justifyContent="space-between" alignItems="center" spacing={3} className={classes.notification}>
 															<Grid item>
 																<Typography >{o.name}</Typography>
 															</Grid>

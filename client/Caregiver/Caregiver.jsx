@@ -172,7 +172,7 @@ export const CaregiverCustomSchedule = (props) => {
 	const handleChange = (e,newValue) => setTabHandler(newValue)
 	return (
 	<React.Fragment>
-		<Grid container justify="center">
+		<Grid container justifyContent="center">
 			<Grid item>
 				<StyledTabs value={tabHandler} onChange={handleChange} aria-label="styled tabs example">
 					{tabs.map((o,i)=>{return (<StyledTab label={o} key={i} />)})}
@@ -196,7 +196,7 @@ export const CaregiverCustomScheduler = (props) => {
 	}
 	return (
 		<React.Fragment>
-			<Grid container justify={Tab?"center":"flex-start"} className={classes.calendarWrapper}>
+			<Grid container justifyContent={Tab?"center":"flex-start"} className={classes.calendarWrapper}>
 				<Grid item md={Tab?11:6} className={classes.calendar} >
 					{Tab==0?<TargetProfileDetails />:
 					<React.Fragment>
@@ -264,24 +264,26 @@ export const FriendList = (props) =>{
 		<>
 			<Grid container component={Paper} className={classes.friendlistContainer} direction="column" >
 				<Typography variant="h5" style={{marginTop:15,paddingLeft:15, marginBottom:15}}>Friends</Typography>
-				<Grid container justify="space-between" spacing={2}>
-					<Grid md={5}>
+				<Grid container justifyContent="space-between" spacing={2}>
+					<Grid item md={5}>
 						<Button color="primary">Add friend</Button>
 					</Grid>
-					<Grid md={4}>
+					<Grid item md={4}>
 					<TextField id="standard-basic" label="Search" variant="standard" />
 					</Grid>
 				</Grid>
 
 				{/* FriendList Wrapper */}
-					<Grid container>
+					<Grid container alignItems="center" spacing={3}>
 
-						<Grid lg={3} md={5} sm={5} xs={6} alignItems="center">
+						<Grid item lg={3} md={5} sm={5} xs={6} >
 							<Card>
 								{/* show cover photo */}
 								<CardMedia component="img" image={`${window.location.origin}/assets/img/dummyCoverPhoto.png`}/>
 								<CardContent>
-
+									<Grid container>
+										<img src={`${window.location.origin}/assets/img/irys.png`} style={{width:'50%', borderRadius:500, position:'absolute', left:"50%", transform:'transform(-50%, 0px)'}} />
+									</Grid>
 									<Typography gutterBottom variant="h5">
 										Name
 									</Typography>
@@ -298,7 +300,6 @@ export const FriendList = (props) =>{
 							</Card>
 						</Grid>
 
-
 					</Grid>
 				{/* FriendList end Wrapper */}
 			</Grid>
@@ -312,31 +313,31 @@ const Agency = () => {
 		<>
 			<Grid container direction="column" component={Paper} style={{paddingBottom:100, marginBottom:150}}>
 				{/* agency header, cover photo */}
-				<Grid md={12} style={{paddingBottom:180, marginBottom:40, backgroundColor:"#EFEFEF", position:'relative', borderBottomLeftRadius:0, borderBottomRightRadius:0}} component={Paper}>
+				<Grid item md={12} style={{paddingBottom:180, marginBottom:40, backgroundColor:"#EFEFEF", position:'relative', borderBottomLeftRadius:0, borderBottomRightRadius:0}} component={Paper}>
 				</Grid>
 				{/* agency body  profile picture, prefference button */}
-				<Grid md={12}>
+				<Grid item md={12}>
 					<Grid container>
-						<Grid md={3}>
+						<Grid item md={3}>
 							{/* profile picture */}
 
 						</Grid>
-						<Grid md={9}>
+						<Grid item md={9}>
 							<Grid container>
-								<Grid md={9}>
+								<Grid item md={9}>
 									<Typography>Name</Typography>
 								</Grid>
-								<Grid md={3}>
+								<Grid item md={3}>
 									<Typography>2020-Active</Typography>
 								</Grid>
 							</Grid> 
 						</Grid>
 					</Grid>
 				</Grid>
-				<Grid md={12}>
+				<Grid item md={12}>
 					<ActionButtons/>
 				</Grid>
-				<Grid md={12}>
+				<Grid item md={12}>
 					<Typography variant="h4" style={{paddingLeft:40,paddingRight:40,paddingTop:10}}>Company Description</Typography>
 					<Typography style={{paddingLeft:40,paddingRight:40, paddingTop:10, paddingBottom:40}}>
 						company descriptionx

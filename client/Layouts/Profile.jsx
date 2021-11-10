@@ -64,6 +64,21 @@ const useStyles = makeStyles((theme) =>({
 	nameHolder:{
 		paddingTop:theme.spacing(3),
 	},
+	Call:{
+		backgroundColor:`${theme.palette.success.light} !important`,
+	},
+	Message:{
+		backgroundColor:`${theme.palette.info.light} !important`,
+	},
+	Apply:{
+		backgroundColor:`${theme.palette.success.light} !important`,
+	},
+	lightFont:{
+		color:'#fff !important'
+	},
+	darkFont:{
+		color:'#000 !important'
+	}
 }))
 
 export const ViewProfile = withTracker((props) => {
@@ -117,8 +132,8 @@ function ProfileContent(props){
 			<ProfileDivider />
 			<Grid component={Paper} container >
 				{
-				Roles.userIsInRole(_id,'Caregiver')?<CaregiverContent id={_id} />:
-				Roles.userIsInRole(_id,'Patient')?<PatientContent id={_id} />:false/* next for Staffs */
+					Roles.userIsInRole(_id,'Caregiver')?<CaregiverContent id={_id} />:
+					Roles.userIsInRole(_id,'Patient')?<PatientContent id={_id} />:false/* next for Staffs */
 				}
 			</Grid>
 		</React.Fragment>
@@ -219,7 +234,7 @@ export const ProfileCard = () => {
 	return (
 		<React.Fragment>
 			<Grid container direction="row" >
-				<Grid md={4}>
+				<Grid item md={4}>
 					<ProfileImage id={id}/>
 				</Grid>
 			</Grid>
@@ -237,10 +252,11 @@ export const ProfileImage = () => {
 export const ActionButtons=(props)=>{
 	const { size='medium' } = props
 	const classes = useStyles()
+	console.log(theme)
 	return(
 	<>
-		<Button className={classes.agencyButton} size={size}>Call</Button>
-		<Button className={classes.agencyButton} size={size}>Message</Button>
-		<Button className={classes.agencyButton} size={size}>Apply</Button>
+		<Button className={`${classes.agencyButton} ${classes.Call} ${classes.lightFont}`} size={size} variant="contained">Call</Button>
+		<Button className={`${classes.agencyButton} ${classes.Message} ${classes.lightFont}`} size={size} variant="contained">Message</Button>
+		<Button className={`${classes.agencyButton} ${classes.Apply} ${classes.lightFont}`} size={size} variant="contained">Apply</Button>
 	</>)
 }

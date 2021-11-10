@@ -1,12 +1,32 @@
 import React from 'react'
-import { Typography, Button, Container, Box, Grid, Link, Hidden, AppBar, Toolbar, IconButton, Drawer, List, ListItem,	ListItemIcon, ListItemText } from '@mui/material'
+import { 
+		useMediaQuery,
+		useTheme,
+		Typography,
+		Button,
+		Container,
+		Box,
+		Grid,
+		Link,
+		Hidden,
+		AppBar,
+		Toolbar,
+		IconButton,
+		Drawer,
+		List,
+		ListItem,
+		ListItemIcon,
+		ListItemText } from '@mui/material'
 import MenuIcon from '@material-ui/icons/Menu'
 import GetIcon from '../Layouts/GetIcon.jsx'
 import { green } from '@material-ui/core/colors'
 import { makeStyles } from '@mui/styles'
-// import withWidth, { isWidthUp, isWidthDown } from '@material-ui/core/withWidth'
+		// import withWidth,
+		// { isWidthUp,
+		// isWidthDown } from '@material-ui/core/withWidth'
 import Fade from '@material-ui/core/Fade'
-import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { createTheme,
+ThemeProvider } from '@mui/material/styles'
 const theme = createTheme()
 const useStyles = makeStyles((theme)=>({
   s1:{
@@ -15,8 +35,8 @@ const useStyles = makeStyles((theme)=>({
       marginTop:280,
       marginBottom:20,
       position:'relative',
-      [theme.breakpoints.down('sm')]: {
-        marginTop:150,
+      [theme.breakpoints.down('md')]: {
+        marginTop:100,
       }
     },
     "& Button":{
@@ -36,20 +56,29 @@ const useStyles = makeStyles((theme)=>({
       width:450,
       transform:'translate(-10px, 25px)',
       [theme.breakpoints.down('sm')]:{
-        marginTop:50,
+        marginTop:20,
         width:350
       },
       [theme.breakpoints.down('xs')]:{
-        marginTop:50,
+        marginTop:20,
         width:350
       },
       [theme.breakpoints.down('md')]:{
         marginLeft:'auto !important',
         marginRight:'auto !important',
+        marginTop:20,
+        width:350
       }
     },
+		"& .nursingElder":{
+      [theme.breakpoints.down('md')]:{
+        marginLeft:'auto !important',
+        marginRight:'auto !important',
+        marginBottom:50,
+      }
+		},
     "& .mobileTimeSheet":{
-      marginLeft:'0px', 
+      marginLeft:'0px',
       marginRight:'auto',
       [theme.breakpoints.down('sm')]:{
         marginTop:250,
@@ -69,17 +98,24 @@ const useStyles = makeStyles((theme)=>({
 export default Homepage = (props)=>{
   const classes= useStyles()
   const { width } = props
-  // console.log(isWidthUp('md',width))
+	const theme = useTheme()
+	const isMdUp = useMediaQuery(theme.breakpoints.up('md'))
+	
 	return(
 		<React.Fragment>
 			<Container maxWidth='lg'>
-				<Grid container className={classes.s1} alignItems={/*isWidthUp('md',width)?"flex-start":*/"center"}>
+				<Grid container className={classes.s1} alignItems={isMdUp?"flex-start":"center"}>
 					<Grid item lg={4} md={4} sm={12} xs={12}>
 						<Typography variant="h6">Koalacare lets you to automate your Timesheet for your health care Agency</Typography>
-						<Button variant="outlined" align="center">Learn more</Button>
+						<Button variant="outlined" align="center" style={{align:'center'}}>Learn more</Button>
 					</Grid>
 					<Grid item lg={8} md={8} sm={12} xs={12} className={classes.imgContainer}>
-						<img src="assets/img/homeImages/elderly nurse.png" style={{marginLeft:'auto', marginRight:'0px', display:'block', transform:'translate(-10px, 25px)'}} />
+						<img src="assets/img/homeImages/elderly nurse.png"
+						className="nursingElder"
+							style={{marginLeft:'auto',
+											marginRight:'0px',
+											display:'block',
+											transform:'translate(-10px,25px)'}} />
 					</Grid>
 				</Grid>
 			</Container>
@@ -91,9 +127,9 @@ export default Homepage = (props)=>{
 							<img src="assets/img/homeImages/phonetimein.png" className="mobileTimeSheet" />
 						</Grid>
 						<Grid item lg={4} md={4} sm={12} xs={12}>
-							<Grid container direction="column" alignItems={/*isWidthUp('md',width)?"flex-start":*/"center"}>
+							<Grid container direction="column" alignItems={isMdUp?"flex-start":"center"}>
 								<Grid item>
-									<Typography variant="h6" align={/*isWidthUp('md',width)?"left":*/"center"}>Log your time in with your Mobile Phone</Typography>
+									<Typography variant="h6" align={isMdUp?"left":"center"}>Log your time in with your Mobile Phone</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="caption"> your device lets you time in upon your arrival on your patient and keep on track on your record</Typography>
@@ -109,11 +145,11 @@ export default Homepage = (props)=>{
 
 			<Grid container >
 				<Container maxWidth='lg'>
-					<Grid container className={classes.s1} direction={/*isWidthUp('md',width)?"row":*/"column-reverse"} >
+					<Grid container className={classes.s1} direction={isMdUp?"row":"column-reverse"} >
 						<Grid item lg={4} md={4} sm={12} xs={12}>
-							<Grid container direction="column" alignItems={/*isWidthUp('md',width)?"flex-start":*/"center"}>
+							<Grid container direction="column" alignItems={isMdUp?"flex-start":"center"}>
 								<Grid item>
-									<Typography variant="h6" align={/*isWidthUp('md',width)?"left":*/"center"}>It can easily track your time at ease to your smart watch</Typography>
+									<Typography variant="h6" align={isMdUp?"left":"center"}>It can easily track your time at ease to your smart watch</Typography>
 								</Grid>
 								<Grid item>
 									<Typography variant="caption">soon be available on both apple watch and android watch</Typography>

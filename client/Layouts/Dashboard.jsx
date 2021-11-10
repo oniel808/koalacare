@@ -52,6 +52,7 @@ import { SuperAdminDashboardMenu } from '../admin/superAdmin';
 import { useTracker } from 'meteor/react-meteor-data';
 import { Page404 } from './Page404'
 import { createTheme } from '@mui/material/styles';
+import { useHistory } from 'react-router-dom';
 const drawerWidth = 260
 
 theme = createTheme()
@@ -62,7 +63,8 @@ const useStyles = makeStyles((x)=>({
 	drawer:{
 		minWidth:drawerWidth,
 		flexShrink:0,
-		border:"none"
+		border:"none",
+		
 	},
 	drawerPaper:{
 		width:drawerWidth,
@@ -118,8 +120,11 @@ function ListDashboard(props){
 	items.map((o)=>{
 		itemIndex = {[o.MenuName]:false, ...itemIndex}
 	})
+	
+	const history = useHistory();
 	const [dashState, dashSetState] = React.useState(itemIndex)
-	function handleClick (index){
+	function handleClick (index, link){
+		history.push(link);
 		dashSetState({[index]:true})
 		switch (index){
 			case 'Logout':
@@ -141,9 +146,9 @@ function ListDashboard(props){
 
 	function ListItemforDrawer(o,i){
 		return(
-			<ReactLink to={o.href} style={{ textDecoration: 'none' }}>
+			<>
 				{/* <Link style={{ textDecoration: 'none' }}> */}
-					<ListItem button onClick={()=>handleClick(o.MenuName)} key={`k-${i}`}>
+					<ListItem button onClick={()=>handleClick(o.MenuName,o.href)} key={`k-${i}`}>
 						<ListItemIcon>
 							<GetIcon icon={o.iconTagName}/>
 						</ListItemIcon>
@@ -152,7 +157,7 @@ function ListDashboard(props){
 						{o.Moremenu?dashState[o.MenuName] ? <ExpandLess /> : <ExpandMore />:false}
 					</ListItem>
 				{/* </Link> */}
-			</ReactLink>
+			</>
 		)
 	}
 
@@ -250,9 +255,7 @@ export default function Dashboard({DashboardContent}){
 						<Drawer
 							className={classes.drawer}
 							variant="permanent"
-							classes={{
-								paper: classes.drawerPaper,
-							}}
+							color="primary"
 						>
 							<Toolbar />
 							<div className={classes.drawerContainer}>
@@ -281,7 +284,7 @@ export default function Dashboard({DashboardContent}){
 					</Hidden>
 					<main className={classes.contentMain}>
 						<div className={classes.rootMain}>
-							<Grid container spacing={5} justify="space-between">
+							<Grid container spacing={5} justifyContent="space-between">
 								<Grid item md={8} sm={12} lg ={8} xs={12} style={{overflowY:'auto'}}>
 									<NavBar sidebar={setState}/>
 

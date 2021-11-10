@@ -15,6 +15,7 @@ import Login from './home/LoginPage'
 import Dashboard from './Layouts/Dashboard'
 import { useTracker } from 'meteor/react-meteor-data'
 import CssBaseline from "@mui/material/CssBaseline"
+import { grey } from '@mui/material/colors';
 
 import { browserHistory, IndexRoute } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
@@ -25,9 +26,6 @@ const Main = (props)=> {
 	const { Content, Title, children } = props
 	return (
 		<>
-			<Helmet>
-				<title>KoalaCare</title>
-			</Helmet>
 			<ThemeProvider theme={HomeTheme}>
 				<CssBaseline />
 				<Header/>
@@ -40,6 +38,12 @@ const Main = (props)=> {
 Meteor.startup(()=>{
 	render(
 		<Router>
+			<Helmet>
+				<title>KoalaCare</title>
+				<style>
+					{`body{ background-color: ${grey[100]} !important }`}
+				</style>
+			</Helmet>
 			<Switch>
 				<Route exact path="/" component={Main}/>
 				{

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Typography, Button, Container, Box, Grid, Link, Hidden, AppBar, Toolbar, IconButton, Drawer, List, ListItem,	ListItemIcon, ListItemText } from '@material-ui/core';
+import { Typography, Button, Container, Box, Grid, Link, Hidden, AppBar, Toolbar, IconButton, Drawer, List, ListItem,	ListItemIcon, ListItemText } from '@mui/material';
 import MenuIcon from '@material-ui/icons/Menu'
 import GetIcon from '../Layouts/GetIcon.jsx'
 import { green } from '@material-ui/core/colors'
@@ -16,17 +16,23 @@ const useStyles = makeStyles((theme)=>({
   },
   navRoot:{
     marginRight:'auto',
-    boxShadow:'0px 0px 0px transparent'
+    boxShadow:'0px 0px 0px transparent',
   },
   menuButton:{
     // marginRight: theme.spacing(2),
     marginRight: 2,
   },
   title:{
+		textAlign:'center',
     marginRight:'auto',
-    [theme.breakpoints.down('sm')]: {
+    [theme.breakpoints.down('md')]: {
       width:'100% !important',
     },
+    [theme.breakpoints.up('md')]: {
+			paddingLeft:50,
+			textAlign:'left'
+		},
+		paddingLeft:0
   },
   drawerPaper:{
     width:'100%',
@@ -117,13 +123,8 @@ export function Header(){
 		<React.Fragment>
 			<AppBar position="static" color="transparent" className={classes.navRoot}>
 				<Toolbar style={{paddingLeft:20,paddingRight:20, paddingTop:50}}>
-					<Hidden mdUp>
-						<IconButton edge="start" className={classes.menuButton} onClick={openDrawer} color="inherit" aria-label="menu">
-							<MenuIcon />
-						</IconButton>
-					</Hidden>
-					<Typography align="center" style={{fontSize:35}} className={classes.title}>KoalaCare</Typography>
-					<Hidden smDown>
+					<Typography style={{fontSize:35}} className={classes.title} sx={{ flexGrow: 1 }}>KoalaCare</Typography>
+					<Hidden mdDown>
 						{nav.map((o,i)=>{
 							return(
 								<Button key={i}>
@@ -135,18 +136,24 @@ export function Header(){
 								</Button>)
 						})}
 					</Hidden>
+					
+					<Hidden mdUp>
+						<IconButton edge="start" className={classes.menuButton} onClick={openDrawer} color="inherit" aria-label="menu">
+							<MenuIcon />
+						</IconButton>
+					</Hidden>
 				</Toolbar>
 			</AppBar>
 			{/* drawer for Appbar */}
 			<Drawer
         className={classes.drawer}
         variant="persistent"
-        anchor="left"
+        anchor="right"
         open={drawerStatus}
         classes={{
           paper: classes.drawerPaper,
         }}>
-				<Grid container justify="center" alignItems="center" style={{height:'100%'}}>
+				<Grid container justifyContent="center" alignItems="center" style={{height:'100%'}}>
 					<Grid item>
 					<List>
 						{nav.map((o, i)=>(
