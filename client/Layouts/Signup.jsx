@@ -450,7 +450,7 @@ function PersonalDetails(props){
 					</Grid>
 				:<img className={classes.profilePicture} src={'/assets/img/KoalaCareLogo.svg'} htmlFor='uploadProfilePicture'/>}
 				<Grid item md={1}>
-					<Grid container justify="center" alignItems="center" style={{height:'100%'}}>
+					<Grid container justifyContent="center" alignItems="center" style={{height:'100%'}}>
 						<Grid item>
 							<input accept="image/*" className={classes.uploadInput} id="uploadProfilePicture" type="file" onChange={props.data.profilePictureChange}/>
 							<label htmlFor="uploadProfilePicture">
@@ -808,12 +808,12 @@ export function SignupRole(){
 	return(
 		<React.Fragment>
 			<Container maxWidth="lg" className={classes.RoleVariants}>
-				<Grid container justify="center">
+				<Grid container justifyContent="center">
 					<Grid item md={4} className={classes.rolechooserheader}>
 						<Typography variant="h3"> Let us know you. </Typography>
 					</Grid>
 				</Grid>
-				<Grid container spacing={3} justify="center">
+				<Grid container spacing={3} justifyContent="center">
 					{chooser.map((o,i)=>(
 						<Grid item lg={3} md={4} sm={3}>
 							<Link href={o.href}>

@@ -124,7 +124,7 @@ function ListDashboard(props){
 	const history = useHistory();
 	const [dashState, dashSetState] = React.useState(itemIndex)
 	function handleClick (index, link){
-		history.push(link);
+		history.push(link)
 		dashSetState({[index]:true})
 		switch (index){
 			case 'Logout':
@@ -212,7 +212,6 @@ export default function Dashboard({DashboardContent}){
 	Meteor.subscribe("loadRoles", Meteor.userId())
 	const [state, setState] = React.useState(false)
 	console.log(Meteor.user())
-
 	Accounts.onLogout(()=>{
 		Router.go('/login')
 	})

@@ -15,7 +15,9 @@ import Login from './home/LoginPage'
 import Dashboard from './Layouts/Dashboard'
 import { useTracker } from 'meteor/react-meteor-data'
 import CssBaseline from "@mui/material/CssBaseline"
-import { grey } from '@mui/material/colors';
+import { grey } from '@mui/material/colors'
+
+import { Signup, SignupRole } from './Layouts/Signup'
 
 import { browserHistory, IndexRoute } from 'react-router'
 import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
@@ -51,6 +53,7 @@ Meteor.startup(()=>{
 					<Route path="/Dashboard" component={LoadtoRoute}/>:
 					<Route path="/login" component={Login}/>
 				}
+				<Route path="/Signup" component={SignupRole}/>
 				<Route path="*" component={Page404}/>
 				</Switch>
 		</Router>,

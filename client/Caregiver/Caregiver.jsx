@@ -20,6 +20,7 @@ import {
 	DragDropProvider
 	
 } from '@devexpress/dx-react-scheduler-material-ui';
+import { grey } from '@mui/material/colors';
 import { BrowserRouter as Router, Switch, Route, Link as ReactLink, Redirect } from 'react-router-dom'
 
 import { ActionButtons } from '../Layouts/Profile'
@@ -55,9 +56,25 @@ const useStyles = makeStyles((theme)=>({
 		backgroundImage:'linear-gradient(to bottom right, #F1F1F1, #73BBFF)'
 	},
 	friendlistContainer:{
-		paddingBottom:100,
-		paddingtop:100
+		padding:'10px 20px 100px 20px'
 	},
+	profileName:{
+		paddingTop:30
+	},
+	profileImg:{
+		width:'50%',
+		borderRadius:500,
+		position:'absolute',
+		left:"50%",
+		top:-20,
+		transform:'translate(-50%, -50%)',
+		backgroundColor:grey[100],
+		border:`${grey[300]} solid 1px`,
+		boxShadow:`1px 1px 6px ${grey[200]}`
+	},
+	friendlistWrapper:{
+		paddingTop:30
+	}
 }))
 
 export const CaregiverDashboard =()=>{
@@ -268,37 +285,19 @@ export const FriendList = (props) =>{
 					<Grid item md={5}>
 						<Button color="primary">Add friend</Button>
 					</Grid>
-					<Grid item md={4}>
+					<Grid item md={4}>	
 					<TextField id="standard-basic" label="Search" variant="standard" />
 					</Grid>
 				</Grid>
 
 				{/* FriendList Wrapper */}
-					<Grid container alignItems="center" spacing={3}>
+					<Grid container alignItems="center" spacing={3} className={classes.friendlistWrapper}>
 
-						<Grid item lg={3} md={5} sm={5} xs={6} >
-							<Card>
-								{/* show cover photo */}
-								<CardMedia component="img" image={`${window.location.origin}/assets/img/dummyCoverPhoto.png`}/>
-								<CardContent>
-									<Grid container>
-										<img src={`${window.location.origin}/assets/img/irys.png`} style={{width:'50%', borderRadius:500, position:'absolute', left:"50%", transform:'transform(-50%, 0px)'}} />
-									</Grid>
-									<Typography gutterBottom variant="h5">
-										Name
-									</Typography>
-									<Typography variant="h6">
-										About
-									</Typography>
-									<Typography variant="body2" color="textSecondary" noWrap style={{textOverflow: '-o-ellipsis-lastline'}}>
-									Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-									</Typography>
-								</CardContent>
-								<CardActions>	
-									<ActionButtons size="small"/>
-								</CardActions>
-							</Card>
-						</Grid>
+						<ProfileCard/>
+						<ProfileCard/>
+						<ProfileCard/>
+						<ProfileCard/>
+						<ProfileCard/>
 
 					</Grid>
 				{/* FriendList end Wrapper */}
@@ -306,7 +305,35 @@ export const FriendList = (props) =>{
 		</>
 	)
 }
-
+const ProfileCard=()=>{
+	const classes = useStyles()
+	return (
+	<>
+		<Grid item lg={3} md={5} sm={5} xs={6} >
+			<Card>
+				{/* show cover photo */}
+				<CardMedia component="img" image={`${window.location.origin}/assets/img/dummyCoverPhoto.png`}/>
+				<CardContent>
+					<Grid container style={{position:'relative'}}>
+						<img src={`${window.location.origin}/assets/img/irys.png`} className={classes.profileImg} />
+					</Grid>
+					<Typography gutterBottom variant="h5" className={classes.profileName}>
+						Name
+					</Typography>
+					<Typography variant="body">
+						About
+					</Typography>
+					<Typography variant="body2" color="textSecondary" noWrap style={{textOverflow: '-o-ellipsis-lastline'}}>
+					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+					</Typography>
+				</CardContent>
+				<CardActions>	
+					<ActionButtons size="small" buttons='viewProfile'/>
+				</CardActions>
+			</Card>
+		</Grid>
+	</>)
+}
 const Agency = () => {
 	const classes=useStyles()
 	return (

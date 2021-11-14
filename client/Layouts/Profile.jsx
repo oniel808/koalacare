@@ -10,7 +10,7 @@ import { infoCards as CaregiverCards,
 import { infoCards as PatientCards, 
 				 PatientToCaregiver as PatientContent} from '../Patient/Patient.jsx'
 import Moment from 'react-moment'
-
+import { lightBlue } from '@mui/material/colors';
 import { createTheme } from '@mui/material/styles'
 import {
 	Scheduler,
@@ -72,6 +72,10 @@ const useStyles = makeStyles((theme) =>({
 	},
 	Apply:{
 		backgroundColor:`${theme.palette.success.light} !important`,
+	},
+	viewProfileButton:{
+		width:'100%',
+		backgroundColor:`${lightBlue[300]} !important`
 	},
 	lightFont:{
 		color:'#fff !important'
@@ -250,13 +254,19 @@ export const ProfileImage = () => {
 }
 
 export const ActionButtons=(props)=>{
-	const { size='medium' } = props
+	const { size='medium', buttons } = props
 	const classes = useStyles()
 	console.log(theme)
+	if(buttons == "viewProfile")
+		return (<Button className={`${classes.agencyButton} ${classes.viewProfileButton} ${classes.lightFont}`} size={size} variant="contained">View Profile</Button>)
+	else if(typeof buttons === Array)
 	return(
 	<>
 		<Button className={`${classes.agencyButton} ${classes.Call} ${classes.lightFont}`} size={size} variant="contained">Call</Button>
 		<Button className={`${classes.agencyButton} ${classes.Message} ${classes.lightFont}`} size={size} variant="contained">Message</Button>
 		<Button className={`${classes.agencyButton} ${classes.Apply} ${classes.lightFont}`} size={size} variant="contained">Apply</Button>
-	</>)
+	</>
+	)
+	else
+	return 'sdsa'
 }
