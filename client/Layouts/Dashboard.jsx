@@ -46,13 +46,13 @@ import DashboardIcon from '@material-ui/icons/Dashboard'
 import ExpandLess from '@material-ui/icons/ExpandLess'
 import ExpandMore from '@material-ui/icons/ExpandMore'
 
-import { CaregiverDashboardMenu, Caregiver } from '../Caregiver/Caregiver';
-import { ClientDashboardMenu } from '../Client/Client';
-import { SuperAdminDashboardMenu } from '../admin/superAdmin';
-import { useTracker } from 'meteor/react-meteor-data';
+import { CaregiverDashboardMenu, Caregiver } from '../Caregiver/Caregiver'
+import { ClientDashboardMenu } from '../Client/Client'
+import { SuperAdminDashboardMenu } from '../admin/superAdmin'
+import { useTracker } from 'meteor/react-meteor-data'
 import { Page404 } from './Page404'
-import { createTheme } from '@mui/material/styles';
-import { useHistory } from 'react-router-dom';
+import { createTheme } from '@mui/material/styles'
+import { useHistory } from 'react-router-dom'
 const drawerWidth = 260
 
 theme = createTheme()

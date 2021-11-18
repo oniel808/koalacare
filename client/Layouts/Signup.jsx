@@ -43,14 +43,23 @@ import Slide from '@material-ui/core/Slide'
 import Grow from "@material-ui/core/Grow"
 import Box from '@material-ui/core/Box'
 import Zoom from '@material-ui/core/Zoom'
+import Fade from '@material-ui/core/Fade'
 import Autocomplete from '@material-ui/lab/Autocomplete'
+import ToggleButton from '@material-ui/lab/ToggleButton'
+import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
 import Header from '../home/home.jsx'
-
+import { Page404 } from './Page404.jsx'
+import {
+  CSSTransition,
+  TransitionGroup,
+} from 'react-transition-group';
+import { useHistory } from 'react-router-dom'
 import {
 	MuiPickersUtilsProvider,
 	KeyboardTimePicker,
 	KeyboardDatePicker,
 } from '@material-ui/pickers'
+import { BrowserRouter as Router, Switch, Route, RouterLink, Redirect, useParams } from 'react-router-dom'
 
 const styles = {
 	root: {
@@ -115,11 +124,12 @@ const useStyles = makeStyles((theme)=>({
 			width:'100%'
 	},
 	RoleVariants:{
-		paddingTop:150,
-		paddingBottom:100
+		paddingTop:50,
+		paddingBottom:30
 	},
 	rolechooserheader:{
-		paddingBottom:100
+		paddingBottom:30,
+		opacity:'0.4'
 	},
 	rolechoosertextBottom:{
 		paddingBottom:10,
@@ -132,6 +142,7 @@ export function Signup(param){
 	const [comPP, setComPP] = React.useState()
 	const [CV, setCV] = React.useState('')
 
+	console.log(param)
 	function handleAgeChange(age){
 		setAge(age)
 	}
@@ -149,7 +160,6 @@ export function Signup(param){
 	function uploadCV (x){
 		o = UploadCV(x.currentTarget.files[0])
 		// setProfilePicture()
-		console.log(o)
 		setCV({
 			id:o.config.fileId,
 			ext:o.config.fileData.extensionWithDot,
@@ -204,7 +214,7 @@ export function Signup(param){
 			Phone:x.Phone.value,
 			tel:x.tel.value,
 
-			role:x.rolePicker.value,
+			role:x.rolePicker.value?x.rolePicker.value:param.roleChosen,
 			email:x.email.value,
 			username:x.username.value,
 			password:x.password.value,
@@ -215,7 +225,7 @@ export function Signup(param){
 			resume:CV,
 			company_id:company_id
 		}
-		if(param.roleChooser == 'Company')
+		if(param.roleChosen == 'HealthCareAgency')
 			o={...o, 
 				companyName:x.compName.value,
 				compAddress:x.compAddress.value,
@@ -223,17 +233,21 @@ export function Signup(param){
 				compPhone:x.Pnumber.value,
 				compTel:x.telno.value,
 			}
-		if(activeStep == steps.length-1)
-			Meteor.call('Signup',o,(err,res)=>{
-				console.log(res)
-			})
-		if(!param.mainSignup)
-			Meteor.call('Signup',o,(err,res)=>{
-				console.log(res)
-			})
+	
+			console.log(o)
+	// to submit user's input to the server
+
+		// if(activeStep == steps.length-1)
+		// 	Meteor.call('Signup',o,(err,res)=>{
+		// 		console.log(res)
+		// 	})
+		// if(!param.mainSignup)
+		// 	Meteor.call('Signup',o,(err,res)=>{
+		// 		console.log(res)
+		// 	})
 	}
 	function renderSwitch(param){
-		switch(param.roleChooser){
+		switch(param.roleChosen){
 			case 'HealthCareAgency':
 				return <CompanyDescriptor uploadCompanyProfilePicture={uploadCompanyProfilePicture} comPp={comPP}/>
 			case 'Caregiver':
@@ -267,7 +281,7 @@ export function Signup(param){
 		}
 	}
 
-	console.log(getSteps(param.roleChooser))
+	console.log(getSteps(param.roleChosen))
 	function getSteps(x){
 		arr = [{
 			header:'Personal Details',
@@ -297,7 +311,7 @@ export function Signup(param){
 		return arr
 	}
 
-	const steps = getSteps(param.roleChooser)
+	const steps = getSteps(param.roleChosen)
 	const panelArr = []
 	var iwhile = 0
 	while (iwhile != steps.length) {
@@ -350,73 +364,73 @@ export function Signup(param){
 		console.log(`${steps.length-1} == ${activeStep}`)
 	}
 	var handleAgreement = () => {}
-	if(!param.mainSignup)
+	// if(!param.mainSignup)
 		return(
-				<form id='formSignup' onSubmit={signupForm}>
-					<PersonalDetails classes={classes} data={{ProfilePicture:ProfilePicture,profilePictureChange:handleProfilePictureChange, datechange:handleDateChange,age:age}} />
-					<Contacts />
-					{renderSwitch(param)}
-					{AccountDetails(param)}
-					<Grid container className={classes.submitButton} direction="column">
-						<Grid item md={6} style={{marginTop:10,marginBottom:30}}>
-							<Checkbox onChange={handleAgreement} id="agreement"/>
-							<label for="agreement">by checking this youre hereby agreeing to our </label> <TermsOfAgreement /> and <PrivacyPolicy />
-						</Grid>
-						<Grid item md={6}>
-							<Button variant="contained" color="primary" type="submit" >Submit</Button>
-						</Grid>
+			<form id='formSignup' onSubmit={signupForm}>
+				<PersonalDetails classes={classes} data={{ProfilePicture:ProfilePicture,profilePictureChange:handleProfilePictureChange, datechange:handleDateChange,age:age}} />
+				<Contacts />
+				{renderSwitch(param)}
+				{AccountDetails(param)}
+				<Grid container className={classes.submitButton} direction="column">
+					<Grid item md={6} style={{marginTop:10,marginBottom:30}}>
+						<Checkbox onChange={handleAgreement} id="agreement"/>
+						<label for="agreement">by checking this youre hereby agreeing to our </label> <TermsOfAgreement /> and <PrivacyPolicy />
 					</Grid>
-				</form>
-		)
-	else
-		return(
-			<form id='formSignup' className={classes.mainForm} onSubmit={signupForm}>
-				<Grid container component={Paper} direction="column" >
-					<Grid item>
-						<Stepper alternativeLabel activeStep={activeStep}>
-							{steps.map((o) => (
-								<Step key={o.header}>
-									<StepLabel StepIconProps={o.icon}>{o.header}</StepLabel>
-								</Step>
-							))}
-						</Stepper>
+					<Grid item md={6}>
+						<Button variant="contained" color="primary" type="submit" >Submit</Button>
 					</Grid>
-					<Grid item className={classes.reactiveInputs} style={{minHeight:405}}>
-						<div>
-			 				<Zoom in={signupPanel[0].zoom} className={signupPanel[0].hide?classes.hideComponent:''}>
-			 					<Box>
-									<PersonalDetails classes={classes} data={{ProfilePicture:ProfilePicture,profilePictureChange:handleProfilePictureChange, datechange:handleDateChange,age:age}} />
-								</Box>
-							</Zoom>
-						</div>
-						<div>
-			 				<Zoom in={signupPanel[1].zoom} className={signupPanel[1].hide?classes.hideComponent:''}>
-								<Box>
-									{renderSwitch(param)}
-								</Box>
-							</Zoom>
-						</div>
-						<div>
-			 				<Zoom in={signupPanel[2].zoom} className={signupPanel[2].hide?classes.hideComponent:''}>
-				 				<Box>
-									<Contacts />
-								</Box>
-							</Zoom>
-						</div>
-						<div>
-			 				<Zoom in={signupPanel[3].zoom} className={signupPanel[3].hide?classes.hideComponent:''}>
-			 					<div>
-									{AccountDetails(param)}
-								</div>
-							</Zoom>
-						</div>
-					</Grid>
-					<Button color="primary" disabled={0===activeStep} onClick={()=>{handleSignupPanel('prev')}}>Back</Button>
-					<Button variant="contained" color="primary" className={signupPanel[3].hide?classes.hideComponent:''} type="submit">Finish</Button>
-					<Button variant="contained" color="primary" className={signupPanel[3].hide?'':classes.hideComponent} onClick={(e)=>{handleSignupPanel('next',e)}}>Next</Button>
 				</Grid>
 			</form>
 		)
+	// else
+	// 	return(
+	// 		<form id='formSignup' className={classes.mainForm} onSubmit={signupForm}>
+	// 			<Grid container component={Paper} direction="column" >
+	// 				<Grid item>
+	// 					<Stepper alternativeLabel activeStep={activeStep}>
+	// 						{steps.map((o) => (
+	// 							<Step key={o.header}>
+	// 								<StepLabel StepIconProps={o.icon}>{o.header}</StepLabel>
+	// 							</Step>
+	// 						))}
+	// 					</Stepper>
+	// 				</Grid>
+	// 				<Grid item className={classes.reactiveInputs} style={{minHeight:405}}>
+	// 					<div>
+	// 		 				<Zoom in={signupPanel[0].zoom} className={signupPanel[0].hide?classes.hideComponent:''}>
+	// 		 					<Box>
+	// 								<PersonalDetails classes={classes} data={{ProfilePicture:ProfilePicture,profilePictureChange:handleProfilePictureChange, datechange:handleDateChange,age:age}} />
+	// 							</Box>
+	// 						</Zoom>
+	// 					</div>
+	// 					<div>
+	// 		 				<Zoom in={signupPanel[1].zoom} className={signupPanel[1].hide?classes.hideComponent:''}>
+	// 							<Box>
+	// 								{renderSwitch(param)}
+	// 							</Box>
+	// 						</Zoom>
+	// 					</div>
+	// 					<div>
+	// 		 				<Zoom in={signupPanel[2].zoom} className={signupPanel[2].hide?classes.hideComponent:''}>
+	// 			 				<Box>
+	// 								<Contacts />
+	// 							</Box>
+	// 						</Zoom>
+	// 					</div>
+	// 					<div>
+	// 		 				<Zoom in={signupPanel[3].zoom} className={signupPanel[3].hide?classes.hideComponent:''}>
+	// 		 					<div>
+	// 								{AccountDetails(param)}
+	// 							</div>
+	// 						</Zoom>
+	// 					</div>
+	// 				</Grid>
+	// 				<Button color="primary" disabled={0===activeStep} onClick={()=>{handleSignupPanel('prev')}}>Back</Button>
+	// 				<Button variant="contained" color="primary" className={signupPanel[3].hide?classes.hideComponent:''} type="submit">Finish</Button>
+	// 				<Button variant="contained" color="primary" className={signupPanel[3].hide?'':classes.hideComponent} onClick={(e)=>{handleSignupPanel('next',e)}}>Next</Button>
+	// 			</Grid>
+	// 		</form>
+	// 	)
 					// <Button 
 					// 	variant="contained" 
 					// 	color="primary" 
@@ -433,7 +447,6 @@ export function Signup(param){
 
 function PersonalDetails(props){
 	classes = props.classes
-	console.log(props)
 	return(
 		<React.Fragment>
 			<Grid container direction="column">
@@ -701,11 +714,11 @@ function UploadCVButton(props){
 	)
 }
 
-function AccountDetails(props){
+function AccountDetails(props = ""){
 	const classes = useStyles()
 	const roles = []
-	var defaultRole = ''
-	switch(props.roleChooser){
+	var defaultRole = props.roleChosen
+	switch(props.roleChosen){
 		case 'HealthCareAgency' :
 			roles.push(...[
 				{val:'Owner',text:'Owner'}
@@ -741,21 +754,24 @@ function AccountDetails(props){
 				<Divider />
 			</Grid>
 			<Grid item>
-				<FormControl className={classes.formControl}>
-					<InputLabel id="Role">Role</InputLabel>
-					<Select
-						labelId="Role"
-						id="rolePicker"
-						name="rolePicker"
-						value={role}
-						onChange={handleChange}
-						label="rolepicker"
-						form="formSignup"
-						disabled={defaultRole?true:false}
-					>
-						{roles.map((o)=>{return(<MenuItem value={o.val} key={o.val}>{o.text}</MenuItem>)})}
-					</Select>
-				</FormControl>
+				{
+					Meteor.userId()?
+						<FormControl className={classes.formControl}>
+							<InputLabel id="Role">Role</InputLabel>
+							<Select
+								labelId="Role"
+								id="rolePicker"
+								name="rolePicker"
+								value={role}
+								onChange={handleChange}
+								label="rolepicker"
+								form="formSignup"
+								disabled={defaultRole?true:false}
+							>
+								{roles.map((o)=>{return(<MenuItem value={o.val} key={o.val}>{o.text}</MenuItem>)})}
+							</Select>
+						</FormControl>:''
+				}
 			</Grid>
 			<Grid item md={6} className={classes.setSpaceTopinput}>
 				<FormControl>	
@@ -784,9 +800,22 @@ function AccountDetails(props){
 		</Grid>
 	)
 }
-
-export function SignupRole(){
+export const SignupContainerMain = () => {
+	const [Rolechosen, useRolechosen ] = React.useState()
+	const roleChooser = (e,role) => {
+		if(role !== null)
+			useRolechosen(role)
+	}
+	return (
+	<>
+		<SignupRole roleChosen={Rolechosen} roleChooser={roleChooser} />
+		<Signup roleChosen={Rolechosen}/>
+	</>
+	)
+}
+export function SignupRole(props){
 	const classes = useStyles()
+	const { roleChosen, roleChooser } = props
 	const [raiser, setRaiser] = React.useState([])
 	function handleHover(i,x){
 		setRaiser({...raiser, [i]:x})
@@ -794,36 +823,43 @@ export function SignupRole(){
 	chooser=[{
 			img:'/assets/img/agency.png',
 			text:'Signup as Health Care Agency',
-			href:"/Signup/HealthCareAgency"
+			href:"/Signup/HealthCareAgency",
+			value:"HealthCareAgency"
 		},{
 			img:'/assets/img/caregiver.png',
 			text:'Signup as Caregiver',
-			href:"/Signup/Caregiver"
+			href:"/Signup/Caregiver",
+			value:"Caregiver"
 		},{
 			img:'/assets/img/househeart.png',
 			text:'Signup as Patient',
-			href:"/Signup/Patient"
+			href:"/Signup/Patient",
+			value:"Patient"
 		}
 	]
+	const history = useHistory();
 	return(
 		<React.Fragment>
 			<Container maxWidth="lg" className={classes.RoleVariants}>
 				<Grid container justifyContent="center">
 					<Grid item md={4} className={classes.rolechooserheader}>
-						<Typography variant="h3"> Let us know you. </Typography>
+						<Typography variant="h4" align="center">make account as</Typography>
 					</Grid>
 				</Grid>
+
 				<Grid container spacing={3} justifyContent="center">
-					{chooser.map((o,i)=>(
-						<Grid item lg={3} md={4} sm={3}>
-							<Link href={o.href}>
-								<Paper elevation={raiser[`i_${i}`]} onMouseEnter={()=>handleHover(`i_${i}`,5)} onMouseLeave={()=>handleHover(`i_${i}`,1)}>
-									<img src={o.img} className={classes.rolechooserimg}/>
-									<Typography align="center" className={classes.rolechoosertextBottom}>{o.text}</Typography>
-								</Paper>					
-							</Link>
-						</Grid>
-					))}
+					<Grid item lg={5} md={5} sm={12} >
+						<ToggleButtonGroup
+							color="primary"
+							value={roleChosen}
+							exclusive
+							size="small"
+							onChange={roleChooser}
+						>{chooser.map((o,i)=>(
+							<ToggleButton value={o.value} key={i}>{o.text}</ToggleButton>
+							))}
+						</ToggleButtonGroup>
+					</Grid>
 				</Grid>
 			</Container>
 		</React.Fragment>
