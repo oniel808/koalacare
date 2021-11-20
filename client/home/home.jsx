@@ -157,7 +157,7 @@ export function Header(){
 					<Grid item>
 					<List>
 						{nav.map((o, i)=>(
-							<Link href={o.href}>
+							<Link href={o.href} key={i}>
 								<ListItem button key={i}>
 									<ListItemIcon><GetIcon icon={o.icon}/></ListItemIcon>
 									<ListItemText primary={o.title} />

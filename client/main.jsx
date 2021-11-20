@@ -11,16 +11,15 @@ import { makeStyles } from '@mui/styles'
 import { Header, Footer } from './home/home.jsx'
 import { Helmet } from 'react-helmet'
 import Homepage from './home/homeContent.jsx'
-import Login from './home/LoginPage'
+import LoginAndSignup from './home/LoginAndSignup'
 import Dashboard from './Layouts/Dashboard'
 import { useTracker } from 'meteor/react-meteor-data'
 import CssBaseline from "@mui/material/CssBaseline"
 import { grey } from '@mui/material/colors'
 
-import { Signup, SignupRole, SignupContainerMain } from './Layouts/Signup'
 
 import { browserHistory, IndexRoute } from 'react-router'
-import { BrowserRouter as Router, Switch, Route, Link, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Link, Redirect } from 'react-router-dom'
 import { Page404 } from './Layouts/Page404'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
@@ -46,16 +45,16 @@ Meteor.startup(()=>{
 					{`body{ background-color: ${grey[100]} !important }`}
 				</style>
 			</Helmet>
-			<Switch>
-					<Route exact path="/" component={Main}/>
-					{
-						Meteor.userId()?
-						<Route path="/Dashboard" component={LoadtoRoute}/>:
-						<Route path="/login" component={Login}/>
-					}
-					<Route path="/Signup/" component={SignupContainerMain}/>
-					<Route path="*" component={Page404}/>
-				</Switch>
+			<Routes>
+				<Route path="/" element={<Main/>}/>
+				{
+					Meteor.userId()?
+					<Route path="/Dashboard" element={LoadtoRoute}/>:
+					<Route path="/login" element={<LoginAndSignup param={{purpose:'login'}}/>}/>
+				}
+				<Route path="/Signup/" element={<LoginAndSignup param={{purpose:'signup'}}/>}/>
+				<Route path="*" element={Page404}/>
+			</Routes>
 		</Router>,
 		document.getElementById("react-target")
 	)
