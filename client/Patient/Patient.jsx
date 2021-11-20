@@ -7,7 +7,7 @@ import GetIcon from '../Layouts/GetIcon.jsx'
 import moment from 'moment';
 import { Paper, Button, Divider, Radio, RadioGroup, InputLabel, FormLabel, 
 				FormControl, FormControlLabel, Input, TextField, Typography, Grid, Tab, Tabs,
-				Hidden} from '@material-ui/core'
+				Hidden} from '@mui/material'
 import {
 	Scheduler,
 	DayView,

@@ -3,7 +3,7 @@ import { Meteor } from 'meteor/meteor'
 import GetIcon from '../Layouts/GetIcon.jsx'
 
 import { AppBar, Toolbar, IconButton, Typography, Button, Container, Hidden, Grow, Paper, ClickAwayListener, MenuList, MenuItem, Popper, Grid, Link, Fade, Badge} from '@mui/material'
-import Avatar from '@material-ui/core/Avatar'
+import Avatar from '@mui/material/Avatar'
 import { makeStyles } from '@mui/styles'
 export default function NavBar(props){
 	const {sidebar} = props

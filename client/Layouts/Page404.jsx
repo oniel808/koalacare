@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import { makeStyles, withStyles } from '@mui/styles'
 import { Paper, Button, Divider, Radio, RadioGroup, InputLabel, FormLabel, 
 				FormControl, FormControlLabel, Input, TextField, Typography, Grid, Tab, Tabs,
-				Hidden} from '@material-ui/core'
+				Hidden} from '@mui/material'
 
 class Page404 extends React.Component{
 	render(){

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Meteor } from 'meteor/meteor'
-import { Grid, Avatar, Typography, Divider, Paper, Tab, Tabs, Button } from '@material-ui/core' 
+import { Grid, Avatar, Typography, Divider, Paper, Tab, Tabs, Button } from '@mui/material' 
 import { makeStyles, withStyles } from '@mui/styles'
 import { withTracker } from 'meteor/react-meteor-data'
 import { CardCounter } from './CardCounter.jsx'

@@ -2,8 +2,6 @@ import React from 'react';
 import { Meteor } from 'meteor/meteor';
 import { render } from 'react-dom';
 import './router.jsx'
-import { MuiThemeProvider } from '@material-ui/core'
-
 import  NavBar  from './home/NavBar.jsx'
 import HomeTheme from './home/HomeTheme.jsx'
 import ThemeDashboard from './Layouts/ThemeDashboard'

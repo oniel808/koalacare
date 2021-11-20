@@ -5,35 +5,34 @@ import GetIcon from '../Layouts/GetIcon.jsx'
 import { ReactiveVar } from 'meteor/reactive-var'
 
 import { makeStyles } from '@mui/styles'
-import Typography from '@material-ui/core/Typography'
-import InputLabel from '@material-ui/core/InputLabel'
-import Input from '@material-ui/core/Input'
+import Typography from '@mui/material/Typography'
+import InputLabel from '@mui/material/InputLabel'
+import Input from '@mui/material/Input'
 import TextField from '@mui/material/TextField'
-import FormControl from '@material-ui/core/FormControl'
-import FormHelperText from '@material-ui/core/FormHelperText'
-import Grid from '@material-ui/core/Grid'
-import {Link as MaterialLink} from '@material-ui/core/'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Container from '@material-ui/core/Container'
-import Paper from '@material-ui/core/Paper'
-import Divider from '@material-ui/core/Divider'
-import Button from '@material-ui/core/Button'
-import Hidden from '@material-ui/core/Hidden'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import IconButton from '@material-ui/core/IconButton'
-import Autocomplete from '@material-ui/lab/Autocomplete'
-import { shadows } from '@material-ui/system'
-import red from '@material-ui/core/colors/red'
-import Tooltip from '@material-ui/core/Tooltip'
-import Zoom from '@material-ui/core/Zoom'
+import FormControl from '@mui/material/FormControl'
+import FormHelperText from '@mui/material/FormHelperText'
+import Grid from '@mui/material/Grid'
+import {Link as MaterialLink} from '@mui/material/'
+import InputAdornment from '@mui/material/InputAdornment'
+import Container from '@mui/material/Container'
+import Paper from '@mui/material/Paper'
+import Divider from '@mui/material/Divider'
+import Button from '@mui/material/Button'
+import Hidden from '@mui/material/Hidden'
+import Tabs from '@mui/material/Tabs'
+import Tab from '@mui/material/Tab'
+import IconButton from '@mui/material/IconButton'
+import Autocomplete from '@mui/lab/Autocomplete'
+import red from '@mui/material/colors/red'
+import Tooltip from '@mui/material/Tooltip'
+import Zoom from '@mui/material/Zoom'
 import Stepper from '@mui/material/Stepper'
 import Step from '@mui/material/Step'
 import StepLabel from '@mui/material/StepLabel'
 import { useNavigate, BrowserRouter as Router, Routes, Route, Link, Redirect } from 'react-router-dom'
 import { Page404 } from '../Layouts/Page404.jsx'
-import ToggleButton from '@material-ui/lab/ToggleButton'
-import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup'
+import ToggleButton from '@mui/lab/ToggleButton'
+import ToggleButtonGroup from '@mui/lab/ToggleButtonGroup'
 import { createTheme } from '@mui/material/styles'
 import { UploadImage, UploadCV } from '../Layouts/Upload.jsx'
 import {
@@ -77,7 +76,7 @@ const useStyles = makeStyles(()=>({
 	},
 	inputs:{
 		maxWidth:540,
-		width:'100%'
+		width:'40%'
 	},
 	otherStuff:{
 		paddingTop:30,
@@ -89,6 +88,7 @@ const useStyles = makeStyles(()=>({
 	},
 	formLogin:{
 		height:'100%',
+		overflowY:'auto'
 	},
 	loginFooter:{
 		paddingRight:10,
@@ -120,6 +120,9 @@ const useStyles = makeStyles(()=>({
 	},
 	stepper:{
 		padding:theme.spacing(2)
+	},
+	uploadInput:{
+		display:'none'
 	},
 	loginSignupTab:{
 		paddingTop:theme.spacing(2),
@@ -233,7 +236,7 @@ const LoginForm = () => {
 				{errmessage?<Grid item container alignItems="center" justifyContent="center" className={classes.padTop}>
 					<Typography className={classes.errMess}>{errmessage}</Typography>
 				</Grid>:false}
-				<Grid item >
+				<Grid item md={6}>
 					<Grid container direction='column' alignItems="center" >
 						<Grid item className={`${classes.inputs} ${classes.padTop}`} >
 							<TextField id="username" label="Username" variant="outlined" fullWidth/>
@@ -335,7 +338,7 @@ const SignupForm = () => {
 	const steps = [{
 		name:"choose a role"
 	},{
-		name:"Personal Details"
+		name:"Basic Details"
 	},{
 		name:"Account"
 	},{
@@ -426,21 +429,22 @@ const PersonalDetails = (props) => {
 					</Grid>
 				:<Grid item><img className={classes.profilePicture} src={'/assets/img/KoalaCareLogo.svg'} htmlFor='uploadProfilePicture'/></Grid>}
 				<Grid item>
-					<input accept="image/*" className={classes.uploadInput} id="uploadProfilePicture" type="file" onChange={profilePictureChange}/>
+					<label htmlFor="uploadProfilePicture">
+						<input accept="image/*" className={classes.uploadInput} id="uploadProfilePicture" type="file" onChange={profilePictureChange}/>
+						<Button variant="contained" component="span">
+							Upload
+						</Button>
+					</label>
 				</Grid>
 			</Grid>
 			<Grid container direction="column">
-				<Grid item md={12}>
-						<InputLabel htmlFor="fName">First Name</InputLabel>
-						<Input id="fName" variant="outlined" aria-describedby="my-helper-text" color="primary"/>
+				<Grid item className={`${classes.inputs} ${classes.padTop}`}>
+					<TextField id="fName" variant="outlined" label="First Name" color="primary" size="small" fullWidth/>
 				</Grid>
-				<Grid item md={12}>
-					<FormControl>
-						<InputLabel htmlFor="lName">Last Name</InputLabel>
-						<Input id="lName" variant="outlined" aria-describedby="my-helper-text" color="primary"/>
-					</FormControl>
+				<Grid item className={`${classes.inputs} ${classes.padTop}`}>
+					<TextField id="lName" variant="outlined" label="Last Name" color="primary" size="small" fullWidth/>
 				</Grid>
-				<Grid item md={12}>
+				<Grid item >
 
 					{/* Date Picker */}
 					{/* <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -464,42 +468,22 @@ const PersonalDetails = (props) => {
 						</Grid>
 					</MuiPickersUtilsProvider> */}
 				</Grid>
-				<Grid item md={4}>
+				<Grid item className={`${classes.inputs} ${classes.padTop}`}>
 					<Autocomplete
 						id="gender"
+						size="small"
 						options={[{gender:'Male'},{gender:'Female'}]}
 						getOptionLabel={(option) => option.gender}
 						style={{ width: 300 }}
+						fullWidth
 						renderInput={(params) => <TextField {...params} label="Gender" />}
 					/>
 				</Grid>
-			</Grid>
-			<Grid container direction="row" className={classes.heightWeight}>
-				<Grid item md={1} style={{paddingRight:10}}>
-					<FormControl>
-					<Input
-						id="height"
-						endAdornment={<InputAdornment position="end">cm</InputAdornment>}
-						aria-describedby="standard-height-helper-text"
-						inputProps={{
-							'aria-label': 'height',
-						}}
-					/>
-						<FormHelperText id="height">Height</FormHelperText>
-					</FormControl>
+				<Grid item className={`${classes.inputs} ${classes.padTop}`}>
+					<TextField id="lName" variant="outlined" label="Last Name" color="primary" size="small" fullWidth/>
 				</Grid>
-				<Grid item md={1}>
-					<FormControl>
-					<Input
-						id="weight"
-						endAdornment={<InputAdornment position="end">Kg</InputAdornment>}
-						aria-describedby="standard-weight-helper-text"
-						inputProps={{
-							'aria-label': 'weight',
-						}}
-					/>
-						<FormHelperText id="width">Weight</FormHelperText>
-					</FormControl>
+				<Grid item className={`${classes.inputs} ${classes.padTop}`}>
+					<TextField id="lName" variant="outlined" label="Last Name" color="primary" size="small" fullWidth/>
 				</Grid>
 			</Grid>
 		</React.Fragment>

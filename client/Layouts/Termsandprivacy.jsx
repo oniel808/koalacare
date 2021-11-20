@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { Link } from "@material-ui/core";
+import { Link } from "@mui/material";
 export function TermsOfAgreement(props){
   const { a } = props
   return(

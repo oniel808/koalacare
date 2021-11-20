@@ -17,14 +17,14 @@ import {
 		ListItem,
 		ListItemIcon,
 		ListItemText } from '@mui/material'
-import MenuIcon from '@material-ui/icons/Menu'
+import MenuIcon from '@mui/icons-material/Menu'
 import GetIcon from '../Layouts/GetIcon.jsx'
-import { green } from '@material-ui/core/colors'
+import { green } from '@mui/material/colors'
 import { makeStyles } from '@mui/styles'
 		// import withWidth,
 		// { isWidthUp,
-		// isWidthDown } from '@material-ui/core/withWidth'
-import Fade from '@material-ui/core/Fade'
+		// isWidthDown } from '@mui/material/withWidth'
+import Fade from '@mui/material/Fade'
 import { createTheme,
 ThemeProvider } from '@mui/material/styles'
 const theme = createTheme()

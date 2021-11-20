@@ -9,7 +9,7 @@ import GetIcon from '../Layouts/GetIcon.jsx'
 import moment from 'moment';
 import { Paper, Button, Divider, Radio, RadioGroup, InputLabel, FormLabel, 
 				FormControl, FormControlLabel, Input, TextField, Typography, Grid, Tab, Tabs,
-				Hidden, Card,CardMedia, CardContent, CardActions } from '@material-ui/core'
+				Hidden, Card,CardMedia, CardContent, CardActions } from '@mui/material'
 import { ProfileNameHolder, TargetNameHolder, ProfileDivider, CustomSchedule} from '../Layouts/Profile.jsx'
 import {
 	Scheduler,

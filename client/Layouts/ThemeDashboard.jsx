@@ -1,5 +1,5 @@
 import { createTheme } from '@mui/material/styles'
-import {cyan} from '@material-ui/core/colors'
+import {cyan} from '@mui/material/colors'
 
 export default ThemeDashboard = createTheme({
   palette: {
